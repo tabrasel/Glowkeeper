@@ -1,0 +1,107 @@
+[gd_scene load_steps=13 format=3 uid="uid://vq262us8iqep"]
+
+[ext_resource type="Texture2D" uid="uid://if310cb2g3ix" path="res://assets/tilesets/lantern.png" id="1_btv82"]
+[ext_resource type="Script" path="res://scripts/lantern.gd" id="1_vihed"]
+[ext_resource type="Texture2D" uid="uid://cblm3v1omrgnr" path="res://assets/spritesheets/spritesheet_lantern_deposit_sign.png" id="2_5hmh1"]
+[ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="2_uhpnt"]
+[ext_resource type="Script" path="res://scripts/compass.gd" id="6_yop7w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yhgl"]
+atlas = ExtResource("2_5hmh1")
+region = Rect2(0, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6vul"]
+atlas = ExtResource("2_5hmh1")
+region = Rect2(25, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7ns2"]
+atlas = ExtResource("2_5hmh1")
+region = Rect2(0, 0, 25, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u4sbh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yhgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6vul")
+}],
+"loop": true,
+"name": &"flash",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7ns2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3m7kd"]
+size = Vector2(16, 8)
+
+[sub_resource type="Curve2D" id="Curve2D_148v1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1, -9, -5.48008, 21.39, 5.48008, -21.39, -15, -43, 0, 0, 0, 0, 11, -64)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_pwod2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 25, -9, -1.23744, 21.2132, 1.23744, -21.2132, 42, -36, 0, 0, 0, 0, 15, -64)
+}
+point_count = 3
+
+[node name="Lantern" type="Node2D" node_paths=PackedStringArray("top_marker", "deposit_area", "deposit_sign_sprite")]
+position = Vector2(-13, 0)
+script = ExtResource("1_vihed")
+top_marker = NodePath("TopMarker")
+deposit_area = NodePath("DepositArea")
+deposit_sign_sprite = NodePath("DepositSign")
+firefly_resource = ExtResource("2_uhpnt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(13, -37)
+texture = ExtResource("1_btv82")
+
+[node name="DepositSign" type="AnimatedSprite2D" parent="."]
+position = Vector2(13, -12)
+sprite_frames = SubResource("SpriteFrames_u4sbh")
+animation = &"idle"
+frame_progress = 0.81932
+
+[node name="DepositArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DepositArea"]
+position = Vector2(13, -4)
+shape = SubResource("RectangleShape2D_3m7kd")
+
+[node name="Compass" type="Node2D" parent="." node_paths=PackedStringArray("spin_timer")]
+position = Vector2(13, -36)
+script = ExtResource("6_yop7w")
+spring_strength = 0.2
+spring_damping = 0.04
+spin_timer = NodePath("SpinTimer")
+firefly_resource = ExtResource("2_uhpnt")
+
+[node name="SpinTimer" type="Timer" parent="Compass"]
+wait_time = 0.25
+one_shot = true
+
+[node name="TopMarker" type="Marker2D" parent="."]
+position = Vector2(13, -64)
+
+[node name="DepositPaths" type="Node2D" parent="."]
+
+[node name="Path1" type="Path2D" parent="DepositPaths"]
+curve = SubResource("Curve2D_148v1")
+
+[node name="Path2" type="Path2D" parent="DepositPaths"]
+curve = SubResource("Curve2D_pwod2")
+
+[connection signal="body_entered" from="DepositArea" to="." method="_on_deposit_area_body_entered"]
+[connection signal="body_exited" from="DepositArea" to="." method="_on_deposit_area_body_exited"]
+[connection signal="timeout" from="Compass/SpinTimer" to="Compass" method="_on_spin_timer_timeout"]

@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5vhyde5j8hpq"]
+
+[ext_resource type="Script" path="res://scripts/firefly.gd" id="1_rvywd"]
+[ext_resource type="PackedScene" uid="uid://cmjcwfqlmkt8a" path="res://scenes/firefly_catch_explosion.tscn" id="2_1bfq2"]
+[ext_resource type="Texture2D" uid="uid://mnnpi2v525s3" path="res://assets/spritesheets/spritesheet_firefly.png" id="2_isfwx"]
+[ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="3_u4uxl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uimqs"]
+atlas = ExtResource("2_isfwx")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apaey"]
+atlas = ExtResource("2_isfwx")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u7m0g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uimqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apaey")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_frunp"]
+radius = 15.0
+
+[node name="Firefly" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["Fireflies"]]
+script = ExtResource("1_rvywd")
+animated_sprite = NodePath("AnimatedSprite2D")
+catch_explosion_scene = ExtResource("2_1bfq2")
+firefly_resource = ExtResource("3_u4uxl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_u7m0g")
+animation = &"fly"
+autoplay = "fly"
+frame_progress = 0.619985
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_frunp")
+disabled = true

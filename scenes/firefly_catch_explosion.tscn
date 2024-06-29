@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://cmjcwfqlmkt8a"]
+
+[ext_resource type="Texture2D" uid="uid://b5h0fq6yis38j" path="res://assets/spritesheets/spritesheet_catch.png" id="1_fx03w"]
+[ext_resource type="Script" path="res://scripts/firefly_catch_explosion.gd" id="2_54f33"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o771f"]
+atlas = ExtResource("1_fx03w")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itj3b"]
+atlas = ExtResource("1_fx03w")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2idqi"]
+atlas = ExtResource("1_fx03w")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c703b"]
+atlas = ExtResource("1_fx03w")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s3giw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o771f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itj3b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2idqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c703b")
+}],
+"loop": false,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_s3giw")
+autoplay = "default"
+frame = 3
+frame_progress = 1.0
+script = ExtResource("2_54f33")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
