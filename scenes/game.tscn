@@ -285,30 +285,59 @@ script = ExtResource("3_sdril")
 [node name="HUD" type="Control" parent="Camera2D" node_paths=PackedStringArray("transition_display", "inter_transition_timer", "firefly_count_label")]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -82.0
-offset_top = -83.0
-offset_right = 85.0
-offset_bottom = 85.0
+offset_left = -87.0
+offset_top = -87.0
+offset_right = 88.0
+offset_bottom = 88.0
 script = ExtResource("7_ewnvq")
-transition_display = NodePath("ColorRect")
+transition_display = NodePath("TransitionOverlay")
 transition_speed = 2.0
 inter_transition_timer = NodePath("InterTransitionTimer")
 firefly_resource = ExtResource("10_e5tni")
 firefly_count_label = NodePath("FireflyCountLabel")
 
-[node name="ColorRect" type="ColorRect" parent="Camera2D/HUD"]
+[node name="TransitionOverlay" type="ColorRect" parent="Camera2D/HUD"]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -5.0
-offset_top = -4.0
-offset_right = 3.0
-offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
+
+[node name="Letterbox" type="Control" parent="Camera2D/HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="ColorRect" parent="Camera2D/HUD/Letterbox"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -87.5
+offset_right = 87.5
+offset_bottom = 12.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBar" type="ColorRect" parent="Camera2D/HUD/Letterbox"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -87.5
+offset_top = -12.0
+offset_right = 87.5
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
 
 [node name="FireflyCountLabel" type="Label" parent="Camera2D/HUD"]
 unique_name_in_owner = true
@@ -328,22 +357,6 @@ script = SubResource("GDScript_hhsp1")
 [node name="InterTransitionTimer" type="Timer" parent="Camera2D/HUD"]
 wait_time = 0.5
 one_shot = true
-
-[node name="CinematicBarTop" type="ColorRect" parent="Camera2D/HUD"]
-layout_mode = 0
-offset_left = -5.0
-offset_top = -4.0
-offset_right = 170.0
-offset_bottom = 8.0
-color = Color(0, 0, 0, 1)
-
-[node name="CinematicBarBottom" type="ColorRect" parent="Camera2D/HUD"]
-layout_mode = 0
-offset_left = -5.0
-offset_top = 159.0
-offset_right = 170.0
-offset_bottom = 171.0
-color = Color(0, 0, 0, 1)
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(-1050, -525)
