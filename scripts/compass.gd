@@ -9,6 +9,7 @@ class_name Compass
 var _target_firefly: Firefly
 var _angle_velocity: float
 var _angle: float
+var _next_spin_dir: int = 1
 
 
 func _ready():
@@ -41,9 +42,10 @@ func _draw():
 	draw_line(center, south, Color(1, 1, 1))
 
 func _on_fireflies_deposited():
-	_angle_velocity = 0.3 if randf_range(0, 1) < 0.5 else -0.3
+	_angle_velocity = 0.3 * _next_spin_dir
 	_target_firefly = null
 	spin_timer.start()
+	_next_spin_dir *= -1
 
 func _on_spin_timer_timeout():
 	choose_target()
