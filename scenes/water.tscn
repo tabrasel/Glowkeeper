@@ -3,23 +3,34 @@
 [ext_resource type="Script" path="res://scripts/water.gd" id="1_kpxa2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rjl8m"]
-size = Vector2(25, 25)
+resource_local_to_scene = true
+size = Vector2(21, 22)
 
-[node name="Water" type="Node2D" node_paths=PackedStringArray("bounds_shape", "visible_poly")]
-position = Vector2(10, 10)
+[node name="Water" type="Node2D" node_paths=PackedStringArray("bounds_shape", "visible_poly", "ripple_timer")]
 script = ExtResource("1_kpxa2")
 bounds_shape = NodePath("Area2D/CollisionShape2D")
 visible_poly = NodePath("Area2D/Polygon2D")
-spring_strength = 0.2
-spring_damping = 0.04
+points_per_tile = 3
+spring_strength = 0.05
+spring_damping = 0.002
+spread = 5
+ripple_timer = NodePath("RippleTimer")
+ripple_velocity = 15.0
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(2, 2)
+position = Vector2(11.5, 13)
 shape = SubResource("RectangleShape2D_rjl8m")
 
 [node name="Polygon2D" type="Polygon2D" parent="Area2D"]
-position = Vector2(-10, -10)
 color = Color(0.380392, 0.454902, 0.682353, 1)
 polygon = PackedVector2Array(25, 0, 25, 25, 0, 25, 0, 0)
+
+[node name="RippleTimer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="RippleTimer" to="." method="_on_ripple_timer_timeout"]

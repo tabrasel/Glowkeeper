@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://27c45s4m5sou"]
+[gd_scene load_steps=18 format=3 uid="uid://27c45s4m5sou"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_3yjid"]
 [ext_resource type="PackedScene" uid="uid://bubmgpj2we3km" path="res://scenes/player.tscn" id="1_apqri"]
@@ -143,6 +143,10 @@ sources/0 = SubResource("TileSetAtlasSource_qwvty")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3kv1w"]
 size = Vector2(2450, 1238)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2n0rj"]
+resource_local_to_scene = true
+size = Vector2(2450, 24)
+
 [sub_resource type="GDScript" id="GDScript_hhsp1"]
 script/source = "extends Label
 
@@ -209,6 +213,14 @@ visible = false
 position = Vector2(100, -57)
 shape = SubResource("RectangleShape2D_3kv1w")
 
+[node name="Water" parent="." instance=ExtResource("13_6lylm")]
+position = Vector2(-1050, 687)
+spread = 4
+
+[node name="CollisionShape2D" parent="Water/Area2D" index="0"]
+position = Vector2(1225, 12)
+shape = SubResource("RectangleShape2D_2n0rj")
+
 [node name="Fireflies" type="Node2D" parent="."]
 
 [node name="Firefly1" parent="Fireflies" instance=ExtResource("4_cv8cd")]
@@ -272,17 +284,19 @@ position = Vector2(306, 563)
 position = Vector2(-88, 636)
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
 position = Vector2(-184.941, 694.789)
 scale = Vector2(1.44176, 0.799019)
 color = Color(0.38209, 0.45384, 0.683294, 1)
 polygon = PackedVector2Array(-600, -11, -600, 4.00998, -600, 23, 1100, 23, 1100, -11, 250.655, -11)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(87, 87)
 editor_draw_limits = true
 script = ExtResource("3_sdril")
 
-[node name="HUD" type="Control" parent="Camera2D" node_paths=PackedStringArray("transition_display", "inter_transition_timer", "firefly_count_label")]
+[node name="HUD" type="Control" parent="Camera" node_paths=PackedStringArray("transition_display", "inter_transition_timer", "firefly_count_label")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -87.0
@@ -296,7 +310,7 @@ inter_transition_timer = NodePath("InterTransitionTimer")
 firefly_resource = ExtResource("10_e5tni")
 firefly_count_label = NodePath("FireflyCountLabel")
 
-[node name="TransitionOverlay" type="ColorRect" parent="Camera2D/HUD"]
+[node name="TransitionOverlay" type="ColorRect" parent="Camera/HUD"]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -306,7 +320,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
-[node name="Letterbox" type="Control" parent="Camera2D/HUD"]
+[node name="Letterbox" type="Control" parent="Camera/HUD"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -314,7 +329,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopBar" type="ColorRect" parent="Camera2D/HUD/Letterbox"]
+[node name="TopBar" type="ColorRect" parent="Camera/HUD/Letterbox"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -325,7 +340,7 @@ offset_bottom = 12.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 
-[node name="BottomBar" type="ColorRect" parent="Camera2D/HUD/Letterbox"]
+[node name="BottomBar" type="ColorRect" parent="Camera/HUD/Letterbox"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -339,14 +354,16 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
 
-[node name="FireflyCountLabel" type="Label" parent="Camera2D/HUD"]
+[node name="FireflyCountLabel" type="Label" parent="Camera/HUD"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 11.0
+offset_left = -43.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = 14.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("11_1xurv")
 theme_override_font_sizes/font_size = 8
@@ -354,7 +371,7 @@ text = "0/20"
 horizontal_alignment = 2
 script = SubResource("GDScript_hhsp1")
 
-[node name="InterTransitionTimer" type="Timer" parent="Camera2D/HUD"]
+[node name="InterTransitionTimer" type="Timer" parent="Camera/HUD"]
 wait_time = 0.5
 one_shot = true
 
@@ -364,11 +381,9 @@ position = Vector2(-1050, -525)
 [node name="Marker2D2" type="Marker2D" parent="."]
 position = Vector2(1400, 875)
 
-[node name="Water" parent="." instance=ExtResource("13_6lylm")]
-position = Vector2(135, 135)
-points_per_tile = 3
-
-[connection signal="player_died" from="Player" to="Camera2D/HUD" method="_on_player_player_died"]
+[connection signal="player_died" from="Player" to="Camera/HUD" method="_on_player_player_died"]
 [connection signal="body_exited" from="TileMap/SafeArea" to="Player" method="_on_safe_area_body_exited"]
-[connection signal="done_fading_out" from="Camera2D/HUD" to="Player" method="_on_hud_done_fading_out"]
-[connection signal="timeout" from="Camera2D/HUD/InterTransitionTimer" to="Camera2D/HUD" method="_on_inter_transition_timer_timeout"]
+[connection signal="done_fading_out" from="Camera/HUD" to="Player" method="_on_hud_done_fading_out"]
+[connection signal="timeout" from="Camera/HUD/InterTransitionTimer" to="Camera/HUD" method="_on_inter_transition_timer_timeout"]
+
+[editable path="Water"]
