@@ -20,8 +20,6 @@ func set_safe_area() -> void:
 	var top: float = floor(used_rect.position.y / room_size) * room_size
 	var bottom: float = ceil((used_rect.position.y + used_rect.size.y) / room_size) * room_size
 	
-	print(str(left) + ", " + str(right) + ", " + str(top) + ", " + str(bottom))
-	
 	var rectangle = RectangleShape2D.new()
 	rectangle.size = Vector2(right - left, bottom - top)
 	
