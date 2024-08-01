@@ -78,16 +78,16 @@ func _catch():
 
 func deposit():
 	state = FireflyState.DEPOSITED
-	_target_position = _lantern.top_marker.global_position
+	_target_anchor = _lantern.top_marker.global_position
 
 func _update_target():
 	_target_offset.x = randf_range(-8, 8)
 	_target_offset.y = randf_range(-8, 8)
 
 func _draw():
-	var direction_to_target: Vector2 = (_target_position - global_position).normalized()
+	#var direction_to_target: Vector2 = (_target_position - global_position).normalized()
 	#draw_line(Vector2.ZERO, velocity, Color.ORANGE)
-	#draw_circle(Vector2.ZERO - Vector2(10, 10), 3, Color.ORANGE)
+	#draw_circle(global_position - _target_position, 3, Color.ORANGE)
 	pass
 
 func _on_target_reposition_timer_timeout():
