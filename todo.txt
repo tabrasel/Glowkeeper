@@ -1,8 +1,8 @@
-- Dynamic water
+- X Dynamic water
 - X Next firefly indicator
 - Better firefly counter
 - Lose progress on death
 - Deposit fireflies
 - Caught/uncaught firefly visuals
 - Intro cutscene
-- Use animation for death fadeout/fadein, not timers and scripts
+- X Use animation for death fadeout/fadein, not timers and scripts
