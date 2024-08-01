@@ -35,6 +35,12 @@ script = ExtResource("1_rvywd")
 animated_sprite = NodePath("AnimatedSprite2D")
 catch_explosion_scene = ExtResource("2_1bfq2")
 firefly_resource = ExtResource("3_u4uxl")
+angle_spring_strength = 0.4
+angle_spring_strength_range = 0.2
+angle_spring_damping = 0.05
+angle_spring_damping_range = 0.01
+acceleration = 200.0
+acceleration_range = 40.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_u7m0g")
@@ -45,3 +51,9 @@ frame_progress = 0.619985
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_frunp")
 disabled = true
+
+[node name="TargetRepositionTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="TargetRepositionTimer" to="." method="_on_target_reposition_timer_timeout"]
