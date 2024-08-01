@@ -1,7 +1,7 @@
 - X Dynamic water
 - X Next firefly indicator
 - Better firefly counter
-- Lose progress on death
+- X Lose progress on death
 - Deposit fireflies
 - Caught/uncaught firefly visuals
 - Intro cutscene

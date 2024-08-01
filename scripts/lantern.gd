@@ -9,20 +9,25 @@ class_name Lantern
 var _player_is_in_deposit_area
 
 
+func set_deposit_sign_active(active: bool):
+	if active:
+		deposit_sign_sprite.play("flash")
+	else:
+		deposit_sign_sprite.play("idle")
+
 func _ready():
 	firefly_resource.connect("firefly_caught", _on_firefly_caught)
 	firefly_resource.connect("fireflies_deposited", _on_fireflies_deposited)
-
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_down") and _player_is_in_deposit_area:
 		firefly_resource.deposit_fireflies()
 
 func _on_firefly_caught():
-	deposit_sign_sprite.play("flash")
+	set_deposit_sign_active(true)
 
 func _on_fireflies_deposited():
-	deposit_sign_sprite.play("idle")
+	set_deposit_sign_active(false)
 
 func _on_deposit_area_body_entered(body):
 	if body.name == "Player":

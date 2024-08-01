@@ -21,6 +21,7 @@ var _lantern: Lantern
 var _angle: float
 var _angle_velocity: float
 
+var _initial_anchor = Vector2()
 var _target_anchor = Vector2()
 var _target_offset = Vector2()
 var _target_position = Vector2()
@@ -38,6 +39,8 @@ func _ready():
 	angle_spring_damping += angle_spring_damping_range * randf_range(-1, 1)
 	acceleration += acceleration_range * randf_range(-1, 1)
 	
+	_initial_anchor.x = global_position.x
+	_initial_anchor.y = global_position.y
 	_target_anchor.x = global_position.x
 	_target_anchor.y = global_position.y
 	_update_target()
@@ -92,3 +95,12 @@ func _draw():
 
 func _on_target_reposition_timer_timeout():
 	_update_target()
+	
+
+func uncatch():
+	global_position.x = _initial_anchor.x
+	global_position.y = _initial_anchor.y
+	_target_anchor.x = _initial_anchor.x
+	_target_anchor.y = _initial_anchor.y
+	velocity = Vector2.ZERO
+	state = FireflyState.ROAMING

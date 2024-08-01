@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://27c45s4m5sou"]
+[gd_scene load_steps=21 format=3 uid="uid://27c45s4m5sou"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_3yjid"]
 [ext_resource type="PackedScene" uid="uid://bubmgpj2we3km" path="res://scenes/player.tscn" id="1_apqri"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b5vhyde5j8hpq" path="res://scenes/firefly.tscn" id="4_cv8cd"]
 [ext_resource type="Script" path="res://scripts/game_map.gd" id="4_k1bbe"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="7_ewnvq"]
+[ext_resource type="Script" path="res://scripts/firefly_manager.gd" id="8_inwbq"]
 [ext_resource type="PackedScene" uid="uid://vq262us8iqep" path="res://scenes/lantern.tscn" id="10_6ajhw"]
 [ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="10_e5tni"]
 [ext_resource type="FontFile" uid="uid://cifu5lgij0env" path="res://assets/fonts/font_Simple.ttf" id="11_1xurv"]
@@ -183,11 +184,39 @@ tracks/1/path = NodePath("%Player")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.6),
+"times": PackedFloat32Array(0.7),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"spawn"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%Camera/../Fireflies")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"reset_caught_fireflies"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%Lantern")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"set_deposit_sign_active"
 }]
 }
 
@@ -257,6 +286,8 @@ position = Vector2(1225, 12)
 shape = SubResource("RectangleShape2D_2n0rj")
 
 [node name="Fireflies" type="Node2D" parent="."]
+script = ExtResource("8_inwbq")
+firefly_resource = ExtResource("10_e5tni")
 
 [node name="Firefly1" parent="Fireflies" instance=ExtResource("4_cv8cd")]
 position = Vector2(137, 37)
