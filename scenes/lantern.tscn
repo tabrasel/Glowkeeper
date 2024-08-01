@@ -29,7 +29,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"flash",
-"speed": 12.0
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -71,7 +71,6 @@ texture = ExtResource("1_btv82")
 position = Vector2(13, -12)
 sprite_frames = SubResource("SpriteFrames_u4sbh")
 animation = &"idle"
-frame_progress = 0.81932
 
 [node name="DepositArea" type="Area2D" parent="."]
 
