@@ -13,7 +13,6 @@ enum FireflyState {ROAMING, CAUGHT, DEPOSITED}
 @export var angle_spring_damping_range: float
 @export var acceleration: float
 @export var acceleration_range: float
-@export var speed_range: float
 
 var _player: Node2D
 var _lantern: Lantern
