@@ -20,7 +20,7 @@ func _ready():
 	firefly_resource.connect("fireflies_deposited", _on_fireflies_deposited)
 
 func _process(_delta):
-	if Input.is_action_just_pressed("ui_down") and _player_is_in_deposit_area:
+	if Input.is_action_just_pressed("ui_down") and _player_is_in_deposit_area and firefly_resource.caught_fireflies.size() > 0:
 		firefly_resource.deposit_fireflies()
 
 func _on_firefly_caught():
