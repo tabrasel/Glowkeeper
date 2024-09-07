@@ -364,13 +364,6 @@ position = Vector2(306, 563)
 [node name="Firefly20" parent="Fireflies" instance=ExtResource("4_cv8cd")]
 position = Vector2(-88, 636)
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-visible = false
-position = Vector2(-184.941, 694.789)
-scale = Vector2(1.44176, 0.799019)
-color = Color(0.38209, 0.45384, 0.683294, 1)
-polygon = PackedVector2Array(-600, -11, -600, 4.00998, -600, 23, 1100, 23, 1100, -11, 250.655, -11)
-
 [node name="Camera" type="Camera2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
