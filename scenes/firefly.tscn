@@ -93,7 +93,7 @@ amount = 3
 process_material = ExtResource("2_fpym0")
 texture = ExtResource("5_vaafw")
 preprocess = 5.0
-explosiveness = 0.53
-randomness = 0.85
+explosiveness = 0.3
+randomness = 0.5
 
 [connection signal="timeout" from="TargetRepositionTimer" to="." method="_on_target_reposition_timer_timeout"]

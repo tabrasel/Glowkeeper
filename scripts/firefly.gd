@@ -53,20 +53,14 @@ func _ready():
 	
 func _process(_delta: float):
 	if state == FireflyState.ROAMING:
+		animated_sprite.play('roam')
 		particles.process_material = cry_particle_material
-		#particles.self_modulate = Color.WHITE
-		#_particles_material.color = Color('#3aadcf')
-		animated_sprite.play('roam')
 	elif state == FireflyState.CAUGHT:
-		particles.process_material = sparkle_particle_material
-		#particles.self_modulate = Color.WHITE
-		#_particles_material.color = Color('#f0e55c')
 		animated_sprite.play('roam')
-	elif state == FireflyState.DEPOSITED:
 		particles.process_material = sparkle_particle_material
-		#particles.self_modulate = Color.WHITE
-		#_particles_material.color = Color('#f0e55c')
+	elif state == FireflyState.DEPOSITED:
 		animated_sprite.play('caught')
+		particles.process_material = sparkle_particle_material
 
 func _physics_process(delta: float):
 	if state == FireflyState.ROAMING:
