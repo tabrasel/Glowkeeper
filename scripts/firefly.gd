@@ -4,6 +4,9 @@ class_name Firefly
 enum FireflyState {ROAMING, CAUGHT, DEPOSITED}
 
 @export var animated_sprite: AnimatedSprite2D
+@export var particles: GPUParticles2D
+@export var cry_particle_material: ParticleProcessMaterial
+@export var sparkle_particle_material: ParticleProcessMaterial
 @export var catch_explosion_scene: PackedScene
 @export var firefly_resource: FireflyResource
 
@@ -13,6 +16,8 @@ enum FireflyState {ROAMING, CAUGHT, DEPOSITED}
 @export var angle_spring_damping_range: float
 @export var acceleration: float
 @export var acceleration_range: float
+
+var state: FireflyState = FireflyState.ROAMING
 
 var _player: Node2D
 var _lantern: Lantern
@@ -25,7 +30,7 @@ var _target_anchor = Vector2()
 var _target_offset = Vector2()
 var _target_position = Vector2()
 
-var state: FireflyState = FireflyState.ROAMING
+var _particles_material: ParticleProcessMaterial
 
 const CATCH_DISTANCE = 15
 
@@ -33,6 +38,8 @@ const CATCH_DISTANCE = 15
 func _ready():
 	_player = get_node("%Player")
 	_lantern = get_node("%Lantern")
+	
+	#_particles_material = particles.process_material as ParticleProcessMaterial
 	
 	angle_spring_strength += angle_spring_strength_range * randf_range(-1, 1)
 	angle_spring_damping += angle_spring_damping_range * randf_range(-1, 1)
@@ -43,6 +50,23 @@ func _ready():
 	_target_anchor.x = global_position.x
 	_target_anchor.y = global_position.y
 	_update_target()
+	
+func _process(_delta: float):
+	if state == FireflyState.ROAMING:
+		particles.process_material = cry_particle_material
+		#particles.self_modulate = Color.WHITE
+		#_particles_material.color = Color('#3aadcf')
+		animated_sprite.play('roam')
+	elif state == FireflyState.CAUGHT:
+		particles.process_material = sparkle_particle_material
+		#particles.self_modulate = Color.WHITE
+		#_particles_material.color = Color('#f0e55c')
+		animated_sprite.play('roam')
+	elif state == FireflyState.DEPOSITED:
+		particles.process_material = sparkle_particle_material
+		#particles.self_modulate = Color.WHITE
+		#_particles_material.color = Color('#f0e55c')
+		animated_sprite.play('caught')
 
 func _physics_process(delta: float):
 	if state == FireflyState.ROAMING:
@@ -81,6 +105,10 @@ func _catch():
 func deposit():
 	state = FireflyState.DEPOSITED
 	_target_anchor = _lantern.top_marker.global_position
+	
+	var catch_explosion = catch_explosion_scene.instantiate()
+	add_child(catch_explosion)
+	catch_explosion.global_position = global_position
 
 func _update_target():
 	_target_offset.x = randf_range(-8, 8)

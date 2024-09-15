@@ -1,9 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5vhyde5j8hpq"]
+[gd_scene load_steps=15 format=3 uid="uid://b5vhyde5j8hpq"]
 
 [ext_resource type="Script" path="res://scripts/firefly.gd" id="1_rvywd"]
 [ext_resource type="PackedScene" uid="uid://cmjcwfqlmkt8a" path="res://scenes/firefly_catch_explosion.tscn" id="2_1bfq2"]
+[ext_resource type="Material" uid="uid://bv7fj83l8khx1" path="res://particle_materials/firefly_cry.tres" id="2_fpym0"]
 [ext_resource type="Texture2D" uid="uid://mnnpi2v525s3" path="res://assets/spritesheets/spritesheet_firefly.png" id="2_isfwx"]
+[ext_resource type="Material" uid="uid://b88a4xs11cix3" path="res://particle_materials/firefly_sparkle.tres" id="3_spju7"]
 [ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="3_u4uxl"]
+[ext_resource type="Texture2D" uid="uid://loyxxbya44u4" path="res://assets/particles/particle_sparkle.png" id="5_vaafw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3s15h"]
+atlas = ExtResource("2_isfwx")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdpi3"]
+atlas = ExtResource("2_isfwx")
+region = Rect2(48, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uimqs"]
 atlas = ExtResource("2_isfwx")
@@ -17,22 +28,42 @@ region = Rect2(48, 0, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_3s15h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdpi3")
+}],
+"loop": true,
+"name": &"caught",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_uimqs")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_apaey")
 }],
 "loop": true,
-"name": &"fly",
+"name": &"roam",
 "speed": 12.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_frunp"]
 radius = 15.0
 
-[node name="Firefly" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["Fireflies"]]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bhb0h"]
+particles_animation = true
+particles_anim_h_frames = 10
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[node name="Firefly" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "particles") groups=["Fireflies"]]
 script = ExtResource("1_rvywd")
 animated_sprite = NodePath("AnimatedSprite2D")
+particles = NodePath("Particles")
+cry_particle_material = ExtResource("2_fpym0")
+sparkle_particle_material = ExtResource("3_spju7")
 catch_explosion_scene = ExtResource("2_1bfq2")
 firefly_resource = ExtResource("3_u4uxl")
 angle_spring_strength = 0.5
@@ -44,9 +75,9 @@ acceleration_range = 40.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_u7m0g")
-animation = &"fly"
-autoplay = "fly"
-frame_progress = 0.619985
+animation = &"roam"
+autoplay = "roam"
+frame_progress = 0.650108
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_frunp")
@@ -55,5 +86,14 @@ disabled = true
 [node name="TargetRepositionTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_bhb0h")
+amount = 3
+process_material = ExtResource("2_fpym0")
+texture = ExtResource("5_vaafw")
+preprocess = 5.0
+explosiveness = 0.53
+randomness = 0.85
 
 [connection signal="timeout" from="TargetRepositionTimer" to="." method="_on_target_reposition_timer_timeout"]
