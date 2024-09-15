@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://27c45s4m5sou"]
+[gd_scene load_steps=24 format=3 uid="uid://27c45s4m5sou"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_3yjid"]
 [ext_resource type="PackedScene" uid="uid://bubmgpj2we3km" path="res://scenes/player.tscn" id="1_apqri"]
@@ -7,12 +7,26 @@
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_sdril"]
 [ext_resource type="PackedScene" uid="uid://b5vhyde5j8hpq" path="res://scenes/firefly.tscn" id="4_cv8cd"]
 [ext_resource type="Script" path="res://scripts/game_map.gd" id="4_k1bbe"]
+[ext_resource type="Script" path="res://scripts/rain_particles.gd" id="4_lkeic"]
+[ext_resource type="Texture2D" uid="uid://c7q11xcrcwd66" path="res://assets/particles/particle_rain.png" id="5_svqp4"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="7_ewnvq"]
 [ext_resource type="Script" path="res://scripts/firefly_manager.gd" id="8_inwbq"]
 [ext_resource type="PackedScene" uid="uid://vq262us8iqep" path="res://scenes/lantern.tscn" id="10_6ajhw"]
 [ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="10_e5tni"]
 [ext_resource type="FontFile" uid="uid://cifu5lgij0env" path="res://assets/fonts/font_Simple.ttf" id="11_1xurv"]
 [ext_resource type="PackedScene" uid="uid://ce77ibv62vkq" path="res://scenes/water.tscn" id="13_6lylm"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v3v1t"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(250, 0, 0)
+emission_shape = 3
+emission_box_extents = Vector3(525, 1, 1)
+direction = Vector3(-1.5, 3, 0)
+spread = 0.0
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+color = Color(1, 1, 1, 0.196078)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qwvty"]
 resource_name = "world"
@@ -252,6 +266,19 @@ z_index = -1
 position = Vector2(182, 178)
 scale = Vector2(14, 6)
 texture = ExtResource("2_i0him")
+
+[node name="RainParticles" type="GPUParticles2D" parent="."]
+z_index = -1
+z_as_relative = false
+position = Vector2(37, -350)
+amount = 2000
+process_material = SubResource("ParticleProcessMaterial_v3v1t")
+texture = ExtResource("5_svqp4")
+lifetime = 6.0
+preprocess = 6.0
+randomness = 1.0
+visibility_rect = Rect2(-175, 0, 350, 1050)
+script = ExtResource("4_lkeic")
 
 [node name="Lantern" parent="." instance=ExtResource("10_6ajhw")]
 unique_name_in_owner = true
