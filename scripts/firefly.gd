@@ -9,6 +9,7 @@ enum FireflyState {ROAMING, CAUGHT, DEPOSITED}
 @export var sparkle_particle_material: ParticleProcessMaterial
 @export var catch_explosion_scene: PackedScene
 @export var firefly_resource: FireflyResource
+@export var audio_player: AudioStreamPlayer2D
 
 @export var angle_spring_strength: float
 @export var angle_spring_strength_range: float
@@ -95,6 +96,8 @@ func _catch():
 	var catch_explosion = catch_explosion_scene.instantiate()
 	add_child(catch_explosion)
 	catch_explosion.global_position = global_position
+	
+	audio_player.play()
 
 func deposit():
 	state = FireflyState.DEPOSITED
