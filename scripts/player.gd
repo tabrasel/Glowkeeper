@@ -6,6 +6,10 @@ class_name Player
 @export var collider: CollisionShape2D
 @export var death_timer: Timer
 
+@export_group('Audio Players')
+@export var footstep_audio_player: AudioStreamPlayer
+@export var jump_audio_player: AudioStreamPlayer
+
 @onready var map: TileMap = %TileMap
 
 signal player_died
@@ -13,7 +17,7 @@ signal player_died
 var _input_direction: int
 var _direction_x: int = 1
 var _cayote_time_remaining: float
-var _is_alive: bool = true
+var is_alive: bool = true
 
 const GROUND_ACCELERATION = 780
 const AIR_ACCELERATION = 600
@@ -31,12 +35,12 @@ func _ready():
 	pass
 
 func spawn():
-	_is_alive = true
+	is_alive = true
 	_direction_x = 1
 	global_position = (map as GameMap).player_spawn_point.global_position
 
 func _process(_delta):
-	if _is_alive:
+	if is_alive:
 		_input_direction = int(Input.get_axis("ui_left", "ui_right"))
 	else:
 		_input_direction = 0
@@ -51,6 +55,8 @@ func _process(_delta):
 			animated_sprite.play("idle")
 		else:
 			animated_sprite.play("run")
+			if (!footstep_audio_player.playing):
+				footstep_audio_player.play()
 	else:
 		animated_sprite.play("jump")
 
@@ -64,7 +70,7 @@ func _physics_process(delta):
 			_cayote_time_remaining -= delta
 	
 	# Handle jump
-	if _is_alive:
+	if is_alive:
 		if Input.is_action_just_pressed("jump") and _cayote_time_remaining > 0:
 			velocity.y = JUMP_LAUNCH_VELOCITY
 		if Input.is_action_pressed("jump") and velocity.y < 0:
@@ -88,7 +94,7 @@ func _physics_process(delta):
 
 func _on_safe_area_body_exited(body: Node2D):
 	if body.name == "Player":
-		_is_alive = false
+		is_alive = false
 		death_timer.start()
 
 
