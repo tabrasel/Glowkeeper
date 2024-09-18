@@ -1,12 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://ce77ibv62vkq"]
+[gd_scene load_steps=4 format=3 uid="uid://ce77ibv62vkq"]
 
 [ext_resource type="Script" path="res://scripts/water.gd" id="1_kpxa2"]
+[ext_resource type="AudioStream" uid="uid://47dwn5rr6ium" path="res://assets/sfx/sfx_water_splash.wav" id="2_mrfuy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rjl8m"]
 resource_local_to_scene = true
 size = Vector2(21, 22)
 
-[node name="Water" type="Node2D" node_paths=PackedStringArray("bounds_shape", "visible_poly", "ripple_timer")]
+[node name="Water" type="Node2D" node_paths=PackedStringArray("bounds_shape", "visible_poly", "ripple_timer", "splash_audio_player")]
 script = ExtResource("1_kpxa2")
 bounds_shape = NodePath("Area2D/CollisionShape2D")
 visible_poly = NodePath("Area2D/Polygon2D")
@@ -16,6 +17,7 @@ spring_damping = 0.002
 spread = 5
 ripple_timer = NodePath("RippleTimer")
 ripple_velocity = 15.0
+splash_audio_player = NodePath("SplashAudioPlayer")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -30,6 +32,9 @@ polygon = PackedVector2Array(25, 0, 25, 25, 0, 25, 0, 0)
 [node name="RippleTimer" type="Timer" parent="."]
 wait_time = 1.5
 autostart = true
+
+[node name="SplashAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_mrfuy")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

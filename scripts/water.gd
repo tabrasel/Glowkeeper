@@ -15,6 +15,8 @@ extends Node2D
 @export var ripple_timer: Timer
 @export var ripple_velocity: float
 
+@export var splash_audio_player: AudioStreamPlayer
+
 var _surface_points: Array[WaterSurfacePoint] = []
 var _map_tile_size: Vector2
 var _dist_between_points: float
@@ -93,7 +95,7 @@ func _on_ripple_timer_timeout() -> void:
 func _on_area_2d_body_entered(body: Node) -> void:
 	if body is Player:
 		_make_ripple(body.global_position.x, 20)
-
+		splash_audio_player.play()
 
 func _on_area_2d_body_exited(body: Node) -> void:
 	if body is Player:
