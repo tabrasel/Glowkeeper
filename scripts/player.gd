@@ -9,6 +9,7 @@ class_name Player
 @export_group('Audio Players')
 @export var footstep_audio_player: AudioStreamPlayer
 @export var jump_audio_player: AudioStreamPlayer
+@export var land_audio_player: AudioStreamPlayer
 
 @onready var map: TileMap = %TileMap
 
@@ -17,6 +18,8 @@ signal player_died
 var _input_direction: int
 var _direction_x: int = 1
 var _cayote_time_remaining: float
+var _was_on_floor: bool
+
 var is_alive: bool = true
 
 const GROUND_ACCELERATION = 780
@@ -51,6 +54,8 @@ func _process(_delta):
 	# Set animation
 	animated_sprite.flip_h = _direction_x < 0
 	if is_on_floor():
+		if !_was_on_floor:
+			land_audio_player.play(0.1)
 		if abs(velocity.x) < 1 and !_input_direction:
 			animated_sprite.play("idle")
 		else:
@@ -59,6 +64,12 @@ func _process(_delta):
 				footstep_audio_player.play()
 	else:
 		animated_sprite.play("jump")
+
+
+func jump() -> void:
+	velocity.y = JUMP_LAUNCH_VELOCITY
+	jump_audio_player.play(0.1)
+
 
 func _physics_process(delta):
 	# Apply gravity
@@ -72,7 +83,7 @@ func _physics_process(delta):
 	# Handle jump
 	if is_alive:
 		if Input.is_action_just_pressed("jump") and _cayote_time_remaining > 0:
-			velocity.y = JUMP_LAUNCH_VELOCITY
+			jump()
 		if Input.is_action_pressed("jump") and velocity.y < 0:
 			velocity.y += JUMP_BOOST_ACCELERATION * delta
 
@@ -88,6 +99,8 @@ func _physics_process(delta):
 	velocity.x = clamp(velocity.x, -MAX_RUN_SPEED, MAX_RUN_SPEED)
 	if velocity.y > MAX_FALL_SPEED:
 		velocity.y = MAX_FALL_SPEED
+
+	_was_on_floor = is_on_floor()
 
 	move_and_slide()
 
