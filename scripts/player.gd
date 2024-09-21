@@ -55,7 +55,7 @@ func _process(_delta):
 	animated_sprite.flip_h = _direction_x < 0
 	if is_on_floor():
 		if !_was_on_floor:
-			land_audio_player.play(0.1)
+			land_audio_player.play()
 		if abs(velocity.x) < 1 and !_input_direction:
 			animated_sprite.play("idle")
 		else:
