@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://c8st0ponerlsm" path="res://assets/spritesheets/spritesheet_player.png" id="1_lh372"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_nbj2v"]
-[ext_resource type="AudioStream" uid="uid://cb8sqykqpqjve" path="res://assets/sfx/sfx_player_jump.ogg" id="3_6xamk"]
 [ext_resource type="AudioStream" uid="uid://cl3bqpgphmu0t" path="res://assets/sfx/sfx_player_footstep.wav" id="3_nn2sf"]
+[ext_resource type="AudioStream" uid="uid://cp8gojwk35aub" path="res://assets/sfx/sfx_player_jump.wav" id="4_nitcf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y651u"]
 atlas = ExtResource("1_lh372")
@@ -79,6 +79,8 @@ volume_db = 2.0
 pitch_scale = 1.5
 
 [node name="JumpAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers"]
-stream = ExtResource("3_6xamk")
+stream = ExtResource("4_nitcf")
+volume_db = 12.0
+
 
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
