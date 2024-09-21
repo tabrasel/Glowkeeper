@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://27c45s4m5sou"]
+[gd_scene load_steps=26 format=3 uid="uid://27c45s4m5sou"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_3yjid"]
 [ext_resource type="PackedScene" uid="uid://bubmgpj2we3km" path="res://scenes/player.tscn" id="1_apqri"]
@@ -14,6 +14,7 @@
 [ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="10_e5tni"]
 [ext_resource type="FontFile" uid="uid://cifu5lgij0env" path="res://assets/fonts/font_Simple.ttf" id="11_1xurv"]
 [ext_resource type="PackedScene" uid="uid://ce77ibv62vkq" path="res://scenes/water.tscn" id="13_6lylm"]
+[ext_resource type="AudioStream" uid="uid://bhecwcy1wnxku" path="res://assets/sfx/sfx_rain.wav" id="15_3d82r"]
 
 [sub_resource type="Gradient" id="Gradient_tlvqi"]
 offsets = PackedFloat32Array(0)
@@ -492,6 +493,11 @@ position = Vector2(-1050, -525)
 
 [node name="Marker2D2" type="Marker2D" parent="."]
 position = Vector2(1400, 875)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_3d82r")
+volume_db = -5.0
+autoplay = true
 
 [connection signal="player_died" from="Player" to="Camera/HUD" method="_on_player_player_died"]
 [connection signal="body_exited" from="TileMap/SafeArea" to="Player" method="_on_safe_area_body_exited"]
