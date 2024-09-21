@@ -9,3 +9,4 @@ func reset_caught_fireflies() -> void:
 		var firefly: Firefly = firefly_resource.caught_fireflies[i]
 		firefly.uncatch()
 		firefly_resource.caught_fireflies.remove_at(i)
+		firefly_resource.uncaught_fireflies.append(firefly)
