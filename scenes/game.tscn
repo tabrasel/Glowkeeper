@@ -359,7 +359,7 @@ position = Vector2(-41, 238)
 position = Vector2(737, 215)
 
 [node name="Firefly5" parent="Fireflies" instance=ExtResource("4_cv8cd")]
-position = Vector2(490, 210)
+position = Vector2(492, 206)
 
 [node name="Firefly6" parent="Fireflies" instance=ExtResource("4_cv8cd")]
 position = Vector2(787, 486)
@@ -389,7 +389,7 @@ position = Vector2(137, 388)
 position = Vector2(488, 438)
 
 [node name="Firefly16" parent="Fireflies" instance=ExtResource("4_cv8cd")]
-position = Vector2(737, 587)
+position = Vector2(737, 592)
 
 [node name="Firefly17" parent="Fireflies" instance=ExtResource("4_cv8cd")]
 position = Vector2(1087, 86)
