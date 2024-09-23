@@ -16,26 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://ce77ibv62vkq" path="res://scenes/water.tscn" id="13_6lylm"]
 [ext_resource type="AudioStream" uid="uid://bhecwcy1wnxku" path="res://assets/sfx/sfx_rain.wav" id="15_3d82r"]
 
-[sub_resource type="Gradient" id="Gradient_tlvqi"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.380392, 0.454902, 0.682353, 0.196078)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ew3ha"]
-gradient = SubResource("Gradient_tlvqi")
-width = 1
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v3v1t"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(250, 0, 0)
-emission_shape = 3
-emission_box_extents = Vector3(525, 1, 1)
-direction = Vector3(-1.5, 3, 0)
-spread = 0.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
-gravity = Vector3(0, 0, 0)
-color_ramp = SubResource("GradientTexture1D_ew3ha")
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qwvty"]
 resource_name = "world"
 texture = ExtResource("2_yhn8g")
@@ -181,6 +161,26 @@ sources/0 = SubResource("TileSetAtlasSource_qwvty")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3kv1w"]
 size = Vector2(2450, 1238)
 
+[sub_resource type="Gradient" id="Gradient_tlvqi"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.380392, 0.454902, 0.682353, 0.196078)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ew3ha"]
+gradient = SubResource("Gradient_tlvqi")
+width = 1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v3v1t"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(250, 0, 0)
+emission_shape = 3
+emission_box_extents = Vector3(525, 1, 1)
+direction = Vector3(-1.5, 3, 0)
+spread = 0.0
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_ew3ha")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2n0rj"]
 resource_local_to_scene = true
 size = Vector2(2450, 24)
@@ -268,30 +268,6 @@ _data = {
 unique_name_in_owner = true
 script = ExtResource("1_3yjid")
 
-[node name="Sky" type="Sprite2D" parent="."]
-modulate = Color(0.168627, 0.211765, 0.356863, 1)
-z_index = -1
-position = Vector2(182, 90.5028)
-scale = Vector2(14, 7.00571)
-texture = ExtResource("2_i0him")
-
-[node name="RainParticles" type="GPUParticles2D" parent="."]
-z_index = -1
-z_as_relative = false
-position = Vector2(37, -527)
-scale = Vector2(1, 1.2)
-amount = 2000
-process_material = SubResource("ParticleProcessMaterial_v3v1t")
-lifetime = 5.0
-preprocess = 6.0
-randomness = 1.0
-visibility_rect = Rect2(-175, 0, 350, 1050)
-trail_enabled = true
-trail_lifetime = 0.06
-trail_sections = 2
-trail_section_subdivisions = 1
-script = ExtResource("4_lkeic")
-
 [node name="Lantern" parent="." instance=ExtResource("10_6ajhw")]
 unique_name_in_owner = true
 position = Vector2(75, 150)
@@ -300,7 +276,7 @@ position = Vector2(75, 150)
 unique_name_in_owner = true
 position = Vector2(37, 143)
 
-[node name="TileMap" type="TileMap" parent="." node_paths=PackedStringArray("player_spawn_point", "safe_area")]
+[node name="TileMap" type="TileMap" parent="." node_paths=PackedStringArray("player_spawn_point", "safe_area", "rain_particles")]
 unique_name_in_owner = true
 position = Vector2(75, 150)
 tile_set = SubResource("TileSet_ndywe")
@@ -319,6 +295,7 @@ script = ExtResource("4_k1bbe")
 room_size_in_tiles = 7
 player_spawn_point = NodePath("PlayerSpawnPoint")
 safe_area = NodePath("SafeArea")
+rain_particles = NodePath("RainParticles")
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="TileMap"]
 position = Vector2(-38, 0)
@@ -330,6 +307,30 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/SafeArea"]
 position = Vector2(100, -57)
 shape = SubResource("RectangleShape2D_3kv1w")
+
+[node name="Sky" type="Sprite2D" parent="TileMap"]
+modulate = Color(0.168627, 0.211765, 0.356863, 1)
+z_index = -10
+position = Vector2(107, -59.4972)
+scale = Vector2(14, 7.00571)
+texture = ExtResource("2_i0him")
+
+[node name="RainParticles" type="GPUParticles2D" parent="TileMap"]
+z_index = -5
+z_as_relative = false
+position = Vector2(-38, -677)
+scale = Vector2(1, 1.2)
+amount = 2000
+process_material = SubResource("ParticleProcessMaterial_v3v1t")
+lifetime = 5.0
+preprocess = 6.0
+randomness = 1.0
+visibility_rect = Rect2(-175, 0, 350, 1050)
+trail_enabled = true
+trail_lifetime = 0.06
+trail_sections = 2
+trail_section_subdivisions = 1
+script = ExtResource("4_lkeic")
 
 [node name="Water" parent="." instance=ExtResource("13_6lylm")]
 position = Vector2(-1050, 687)
@@ -501,6 +502,7 @@ stream = ExtResource("15_3d82r")
 volume_db = -5.0
 autoplay = true
 
+[connection signal="player_died" from="Player" to="TileMap" method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="Camera/HUD" method="_on_player_player_died"]
 [connection signal="body_exited" from="TileMap/SafeArea" to="Player" method="_on_safe_area_body_exited"]
 

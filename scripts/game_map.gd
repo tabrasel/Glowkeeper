@@ -4,6 +4,7 @@ class_name GameMap
 @export var room_size_in_tiles: int
 @export var player_spawn_point: Marker2D
 @export var safe_area: Area2D
+@export var rain_particles: GPUParticles2D
 
 
 func _ready():
@@ -29,3 +30,7 @@ func set_safe_area() -> void:
 	
 	#print(safe_area.global_position)
 	#print(collision_shape.shape.get_rect().position + safe_area.global_position)
+
+
+func _on_player_player_died():
+	rain_particles.restart()
