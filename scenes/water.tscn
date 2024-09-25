@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ce77ibv62vkq"]
 
 [ext_resource type="Script" path="res://scripts/water.gd" id="1_kpxa2"]
-[ext_resource type="AudioStream" uid="uid://47dwn5rr6ium" path="res://assets/sfx/sfx_water_splash.wav" id="2_mrfuy"]
+[ext_resource type="AudioStream" uid="uid://d1o1si7slb7mk" path="res://assets/sfx/sfx_water_splash.wav" id="2_mrfuy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rjl8m"]
 resource_local_to_scene = true
