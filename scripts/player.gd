@@ -10,6 +10,7 @@ class_name Player
 @export var footstep_audio_player: AudioStreamPlayer
 @export var jump_audio_player: AudioStreamPlayer
 @export var land_audio_player: AudioStreamPlayer
+@export var head_hit_audio_player: AudioStreamPlayer
 
 @onready var map: TileMap = %TileMap
 
@@ -19,6 +20,7 @@ var _input_direction: int
 var _direction_x: int = 1
 var _cayote_time_remaining: float
 var _was_on_floor: bool
+var _was_on_ceiling: bool
 
 var is_alive: bool = true
 
@@ -64,6 +66,9 @@ func _process(_delta):
 				footstep_audio_player.play()
 	else:
 		animated_sprite.play("jump")
+		
+	if is_on_ceiling() and !_was_on_ceiling:
+			head_hit_audio_player.play()
 
 
 func jump() -> void:
@@ -101,6 +106,7 @@ func _physics_process(delta):
 		velocity.y = MAX_FALL_SPEED
 
 	_was_on_floor = is_on_floor()
+	_was_on_ceiling = is_on_ceiling()
 
 	move_and_slide()
 
