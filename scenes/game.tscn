@@ -245,7 +245,7 @@ tracks/2/keys = {
 tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("%Lantern")
+tracks/3/path = NodePath("../../TileMap/Lantern")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -267,10 +267,6 @@ _data = {
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_3yjid")
-
-[node name="Lantern" parent="." instance=ExtResource("10_6ajhw")]
-unique_name_in_owner = true
-position = Vector2(75, 150)
 
 [node name="Player" parent="." instance=ExtResource("1_apqri")]
 unique_name_in_owner = true
@@ -332,6 +328,10 @@ trail_sections = 2
 trail_section_subdivisions = 1
 script = ExtResource("4_lkeic")
 
+[node name="Lantern" parent="TileMap" instance=ExtResource("10_6ajhw")]
+unique_name_in_owner = true
+z_index = -1
+
 [node name="Water" parent="." instance=ExtResource("13_6lylm")]
 position = Vector2(-1050, 687)
 spread = 4
@@ -341,6 +341,7 @@ position = Vector2(1225, 12)
 shape = SubResource("RectangleShape2D_2n0rj")
 
 [node name="Fireflies" type="Node2D" parent="."]
+z_index = 2
 script = ExtResource("8_inwbq")
 firefly_resource = ExtResource("10_e5tni")
 
@@ -425,7 +426,7 @@ firefly_resource = ExtResource("10_e5tni")
 firefly_count_label = NodePath("FireflyCountLabel")
 
 [node name="TransitionOverlay" type="ColorRect" parent="Camera/HUD"]
-z_index = 1
+z_index = 100
 z_as_relative = false
 layout_mode = 1
 anchors_preset = 15
@@ -471,6 +472,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="FireflyCountLabel" type="Label" parent="Camera/HUD"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

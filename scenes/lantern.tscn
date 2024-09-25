@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://vq262us8iqep"]
+[gd_scene load_steps=16 format=3 uid="uid://vq262us8iqep"]
 
 [ext_resource type="Texture2D" uid="uid://if310cb2g3ix" path="res://assets/tilesets/lantern.png" id="1_btv82"]
 [ext_resource type="Script" path="res://scripts/lantern.gd" id="1_vihed"]
 [ext_resource type="Texture2D" uid="uid://cblm3v1omrgnr" path="res://assets/spritesheets/spritesheet_lantern_deposit_sign.png" id="2_5hmh1"]
 [ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="2_uhpnt"]
+[ext_resource type="FontFile" uid="uid://cifu5lgij0env" path="res://assets/fonts/font_Simple.ttf" id="6_xkoe1"]
 [ext_resource type="Script" path="res://scripts/compass.gd" id="6_yop7w"]
+[ext_resource type="AudioStream" uid="uid://bid3o8iamdjt6" path="res://assets/sfx/sfx_firefly_deposited.wav" id="7_x6t73"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3yhgl"]
 atlas = ExtResource("2_5hmh1")
@@ -41,14 +43,55 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3m7kd"]
-size = Vector2(16, 15)
+size = Vector2(26, 30)
 
-[node name="Lantern" type="Node2D" node_paths=PackedStringArray("top_marker", "deposit_area", "deposit_sign_sprite")]
+[sub_resource type="Animation" id="Animation_qxapm"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FireflyCount:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_w1rdu"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FireflyCount:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qkltq"]
+_data = {
+"fade_in": SubResource("Animation_qxapm"),
+"fade_out": SubResource("Animation_w1rdu")
+}
+
+[node name="Lantern" type="Node2D" node_paths=PackedStringArray("top_marker", "deposit_area", "deposit_sign_sprite", "deposit_audio_player", "firefly_count_group", "firefly_count_foreground_label", "firefly_count_background_label")]
 script = ExtResource("1_vihed")
 top_marker = NodePath("TopMarker")
 deposit_area = NodePath("DepositArea")
 deposit_sign_sprite = NodePath("DepositSign")
 firefly_resource = ExtResource("2_uhpnt")
+deposit_audio_player = NodePath("DepositAudioPlayer")
+firefly_count_group = NodePath("FireflyCount")
+firefly_count_foreground_label = NodePath("FireflyCount/ForegroundLabel")
+firefly_count_background_label = NodePath("FireflyCount/BackgroundLabel")
+firefly_count_fade_speed = 8.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -37)
@@ -62,7 +105,7 @@ animation = &"idle"
 [node name="DepositArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DepositArea"]
-position = Vector2(0, -7.5)
+position = Vector2(0, -15)
 shape = SubResource("RectangleShape2D_3m7kd")
 
 [node name="Compass" type="Node2D" parent="." node_paths=PackedStringArray("spin_timer")]
@@ -79,6 +122,49 @@ one_shot = true
 
 [node name="TopMarker" type="Marker2D" parent="."]
 position = Vector2(0, -64)
+
+[node name="FireflyCount" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+layout_mode = 3
+anchors_preset = 0
+offset_top = 5.0
+offset_right = 40.0
+offset_bottom = 45.0
+
+[node name="BackgroundLabel" type="Label" parent="FireflyCount"]
+self_modulate = Color(0, 0, 0, 1)
+z_as_relative = false
+layout_mode = 0
+offset_left = -10.0
+offset_top = 4.0
+offset_right = 12.0
+offset_bottom = 12.0
+theme_override_fonts/font = ExtResource("6_xkoe1")
+theme_override_font_sizes/font_size = 8
+text = "0/20"
+horizontal_alignment = 1
+
+[node name="ForegroundLabel" type="Label" parent="FireflyCount"]
+z_as_relative = false
+layout_mode = 0
+offset_left = -28.0
+offset_top = 3.0
+offset_right = 30.0
+offset_bottom = 11.0
+theme_override_fonts/font = ExtResource("6_xkoe1")
+theme_override_font_sizes/font_size = 8
+text = "0/20"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FireflyCount"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_qkltq")
+}
+
+[node name="DepositAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_x6t73")
 
 [connection signal="body_entered" from="DepositArea" to="." method="_on_deposit_area_body_entered"]
 [connection signal="body_exited" from="DepositArea" to="." method="_on_deposit_area_body_exited"]
