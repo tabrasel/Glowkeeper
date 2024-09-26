@@ -1,7 +1,6 @@
 extends CharacterBody2D
 class_name Player
 
-
 @export var animated_sprite: AnimatedSprite2D
 @export var collider: CollisionShape2D
 @export var death_timer: Timer
@@ -19,6 +18,7 @@ signal player_died
 var _input_direction: int
 var _direction_x: int = 1
 var _cayote_time_remaining: float
+var _jump_buffer_time_remaining: float
 var _was_on_floor: bool
 var _was_on_ceiling: bool
 
@@ -32,7 +32,7 @@ const JUMP_LAUNCH_VELOCITY = -185
 const MAX_RUN_SPEED = 90
 const MAX_FALL_SPEED = 220
 const CAYOTE_TIME_SECS = 0.1
-const PREGROUND_JUMP_TIME_SECS = 0.1
+const JUMP_BUFFER_SECS = 0.07
 
 
 func _ready():
@@ -73,6 +73,8 @@ func _process(_delta):
 
 func jump() -> void:
 	velocity.y = JUMP_LAUNCH_VELOCITY
+	_jump_buffer_time_remaining = 0
+	_cayote_time_remaining = 0
 	jump_audio_player.play(0.1)
 
 
@@ -84,11 +86,34 @@ func _physics_process(delta):
 		velocity.y += GRAVITY_ACCELERATION * delta
 		if _cayote_time_remaining > 0:
 			_cayote_time_remaining -= delta
+		if _jump_buffer_time_remaining > 0:
+			_jump_buffer_time_remaining -= delta
 	
-	# Handle jump
+	# Handle jumping
 	if is_alive:
-		if Input.is_action_just_pressed("jump") and _cayote_time_remaining > 0:
+		if Input.is_action_just_pressed("jump"):
+			if is_on_floor():
+				jump()
+			else:
+				if _cayote_time_remaining > 0:
+					jump()
+				else:
+					_jump_buffer_time_remaining = JUMP_BUFFER_SECS
+		
+		if Input.is_action_pressed("jump") and is_on_floor() and _jump_buffer_time_remaining > 0:
 			jump()
+		
+		#if is_on_floor():
+			#if Input.is_action_just_pressed("jump"):
+				#if _cayote_time_remaining > 0:
+					#jump()
+			#elif _jump_buffer_time_remaining > 0:
+				#jump()
+			#_jump_buffer_time_remaining = 0
+		#else:
+			#if Input.is_action_just_pressed("jump"):
+				#_jump_buffer_time_remaining = JUMP_BUFFER_SECS
+		
 		if Input.is_action_pressed("jump") and velocity.y < 0:
 			velocity.y += JUMP_BOOST_ACCELERATION * delta
 
