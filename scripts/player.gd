@@ -80,50 +80,11 @@ func jump() -> void:
 
 func _physics_process(delta):
 	# Apply gravity
-	if is_on_floor():
-		_cayote_time_remaining = CAYOTE_TIME_SECS
-	else:
+	if not is_on_floor():
 		velocity.y += GRAVITY_ACCELERATION * delta
-		if _cayote_time_remaining > 0:
-			_cayote_time_remaining -= delta
-		if _jump_buffer_time_remaining > 0:
-			_jump_buffer_time_remaining -= delta
-	
-	# Handle jumping
-	if is_alive:
-		if Input.is_action_just_pressed("jump"):
-			if is_on_floor():
-				jump()
-			else:
-				if _cayote_time_remaining > 0:
-					jump()
-				else:
-					_jump_buffer_time_remaining = JUMP_BUFFER_SECS
-		
-		if Input.is_action_pressed("jump") and is_on_floor() and _jump_buffer_time_remaining > 0:
-			jump()
-		
-		#if is_on_floor():
-			#if Input.is_action_just_pressed("jump"):
-				#if _cayote_time_remaining > 0:
-					#jump()
-			#elif _jump_buffer_time_remaining > 0:
-				#jump()
-			#_jump_buffer_time_remaining = 0
-		#else:
-			#if Input.is_action_just_pressed("jump"):
-				#_jump_buffer_time_remaining = JUMP_BUFFER_SECS
-		
-		if Input.is_action_pressed("jump") and velocity.y < 0:
-			velocity.y += JUMP_BOOST_ACCELERATION * delta
 
-	# Handle running
-	if _input_direction:
-		var acceleration: float = GROUND_ACCELERATION if is_on_floor() else AIR_ACCELERATION
-		velocity.x += _input_direction * acceleration * delta
-	else:
-		if is_on_floor():
-			velocity.x = move_toward(velocity.x, 0, GROUND_ACCELERATION * delta)
+	if is_alive:
+		_handle_input(delta)
 	
 	# Limit velocity
 	velocity.x = clamp(velocity.x, -MAX_RUN_SPEED, MAX_RUN_SPEED)
@@ -134,6 +95,40 @@ func _physics_process(delta):
 	_was_on_ceiling = is_on_ceiling()
 
 	move_and_slide()
+
+
+func _handle_input(delta):
+	# Handle running
+	if _input_direction:
+		var acceleration: float = GROUND_ACCELERATION if is_on_floor() else AIR_ACCELERATION
+		velocity.x += _input_direction * acceleration * delta
+	else:
+		if is_on_floor():
+			velocity.x = move_toward(velocity.x, 0, GROUND_ACCELERATION * delta)
+	
+	if is_on_floor():
+		_cayote_time_remaining = CAYOTE_TIME_SECS
+	else:
+		if _cayote_time_remaining > 0:
+			_cayote_time_remaining -= delta
+		if _jump_buffer_time_remaining > 0:
+			_jump_buffer_time_remaining -= delta
+	
+	# Handle jumping
+	if Input.is_action_just_pressed("jump"):
+		if is_on_floor():
+			jump()
+		else:
+			if _cayote_time_remaining > 0:
+				jump()
+			else:
+				_jump_buffer_time_remaining = JUMP_BUFFER_SECS
+	
+	if Input.is_action_pressed("jump"):
+		if is_on_floor() and _jump_buffer_time_remaining > 0:
+			jump()
+		if velocity.y < 0:
+			velocity.y += JUMP_BOOST_ACCELERATION * delta		
 
 
 func _on_safe_area_body_exited(body: Node2D):
