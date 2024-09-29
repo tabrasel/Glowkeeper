@@ -7,6 +7,7 @@ var deposited_fireflies: Array = []
 
 signal firefly_caught()
 signal fireflies_deposited()
+signal all_fireflies_deposited()
 
 
 func set_uncaught_fireflies(uncaught_fireflies: Array):
@@ -29,9 +30,7 @@ func deposit_fireflies():
 		deposited_fireflies.append(firefly)
 		firefly.deposit()
 		
-	#for firefly in caught_fireflies:
-		#var index: int = caught_fireflies.find(firefly)
-		#caught_fireflies.erase(firefly)
-		#deposited_fireflies.append(firefly)
-		#firefly.deposit()
 	fireflies_deposited.emit()
+	
+	if len(deposited_fireflies) >= 20:
+		all_fireflies_deposited.emit()

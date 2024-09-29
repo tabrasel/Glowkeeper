@@ -1,6 +1,14 @@
 extends Node
 class_name GameManager
 
+@export var firefly_resource: FireflyResource
+
+signal game_completed()
+
+
+func _ready():
+	firefly_resource.connect("all_fireflies_deposited", _on_all_fireflies_deposited)
+
 
 func _input(_event):
 	if Input.is_action_pressed("ui_cancel"):
@@ -11,3 +19,7 @@ func _input(_event):
 		var _error = img.save_png(file_path)
 	
 		get_tree().quit()
+
+
+func _on_all_fireflies_deposited():
+	game_completed.emit()

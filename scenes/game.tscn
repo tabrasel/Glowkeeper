@@ -267,6 +267,7 @@ _data = {
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_3yjid")
+firefly_resource = ExtResource("10_e5tni")
 
 [node name="Player" parent="." instance=ExtResource("1_apqri")]
 unique_name_in_owner = true
