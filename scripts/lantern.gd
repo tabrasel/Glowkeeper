@@ -14,6 +14,7 @@ class_name Lantern
 @export var firefly_count_fade_speed: float
 
 var _player_is_in_deposit_area: bool
+var _can_show_firefly_count: bool = true
 
 
 func set_deposit_sign_active(active: bool):
@@ -34,7 +35,7 @@ func _process(delta):
 	
 	
 func _update_firefly_count(delta):
-	var alpha_velocity = firefly_count_fade_speed if _player_is_in_deposit_area else -firefly_count_fade_speed
+	var alpha_velocity = firefly_count_fade_speed if _can_show_firefly_count and _player_is_in_deposit_area else -firefly_count_fade_speed
 	var alpha = clamp(firefly_count_group.modulate.a + alpha_velocity * delta, 0, 1)
 	firefly_count_group.modulate = Color(1, 1, 1, alpha)
 	
@@ -57,3 +58,6 @@ func _on_deposit_area_body_entered(body):
 func _on_deposit_area_body_exited(body):
 	if body.name == "Player":
 		_player_is_in_deposit_area = false
+
+func _on_game_manager_game_completed():
+	_can_show_firefly_count = false
