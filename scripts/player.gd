@@ -23,6 +23,7 @@ var _was_on_floor: bool
 var _was_on_ceiling: bool
 
 var is_alive: bool = true
+var _is_controllable: bool = true
 
 const GROUND_ACCELERATION = 780
 const AIR_ACCELERATION = 600
@@ -36,16 +37,17 @@ const JUMP_BUFFER_SECS = 0.07
 
 
 func _ready():
-	#spawn()
-	pass
+	spawn()
 
 func spawn():
 	is_alive = true
+	_is_controllable = true
+	
 	_direction_x = 1
 	global_position = (map as GameMap).player_spawn_point.global_position
 
 func _process(_delta):
-	if is_alive:
+	if _is_controllable:
 		_input_direction = int(Input.get_axis("ui_left", "ui_right"))
 	else:
 		_input_direction = 0
@@ -83,8 +85,11 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += GRAVITY_ACCELERATION * delta
 
-	if is_alive:
+	if _is_controllable:
 		_handle_input(delta)
+	else:
+		if is_on_floor():
+			velocity.x = move_toward(velocity.x, 0, GROUND_ACCELERATION * delta)
 	
 	# Limit velocity
 	velocity.x = clamp(velocity.x, -MAX_RUN_SPEED, MAX_RUN_SPEED)
@@ -134,6 +139,7 @@ func _handle_input(delta):
 func _on_safe_area_body_exited(body: Node2D):
 	if body.name == "Player":
 		is_alive = false
+		_is_controllable = false
 		death_timer.start()
 
 
@@ -143,3 +149,7 @@ func _on_death_timer_timeout():
 
 func _on_hud_done_fading_out():
 	spawn()
+
+
+func _on_game_manager_game_completed():
+	_is_controllable = false

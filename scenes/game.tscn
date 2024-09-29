@@ -505,6 +505,7 @@ stream = ExtResource("15_3d82r")
 volume_db = -5.0
 autoplay = true
 
+[connection signal="game_completed" from="GameManager" to="Player" method="_on_game_manager_game_completed"]
 [connection signal="player_died" from="Player" to="TileMap" method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="Camera/HUD" method="_on_player_player_died"]
 [connection signal="body_exited" from="TileMap/SafeArea" to="Player" method="_on_safe_area_body_exited"]
