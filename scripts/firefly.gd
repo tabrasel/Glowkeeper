@@ -1,9 +1,10 @@
 extends CharacterBody2D
 class_name Firefly
 
-enum FireflyState {ROAMING, CAUGHT, DEPOSITED}
+enum FireflyState {ROAMING, CAUGHT, DEPOSITED, FLYING_INTO_LANTERN, IN_LANTERN}
 
 @export var animated_sprite: AnimatedSprite2D
+@export var glow_sprite: Sprite2D
 @export var particles: GPUParticles2D
 @export var cry_particle_material: ParticleProcessMaterial
 @export var sparkle_particle_material: ParticleProcessMaterial
@@ -11,12 +12,14 @@ enum FireflyState {ROAMING, CAUGHT, DEPOSITED}
 @export var firefly_resource: FireflyResource
 @export var audio_player: AudioStreamPlayer2D
 
+@export var target_offset_radius: float
 @export var angle_spring_strength: float
 @export var angle_spring_strength_range: float
 @export var angle_spring_damping: float
 @export var angle_spring_damping_range: float
 @export var acceleration: float
 @export var acceleration_range: float
+@export var max_speed: float
 
 var state: FireflyState = FireflyState.ROAMING
 
@@ -25,7 +28,6 @@ var _lantern: Lantern
 
 var _angle: float
 var _angle_velocity: float
-
 var _initial_anchor = Vector2()
 var _target_anchor = Vector2()
 var _target_offset = Vector2()
@@ -39,6 +41,8 @@ const CATCH_DISTANCE = 15
 func _ready():
 	_player = get_node("%Player")
 	_lantern = get_node("%Lantern")
+	
+	firefly_resource.connect("all_fireflies_deposited", _on_all_fireflies_deposited)
 	
 	#_particles_material = particles.process_material as ParticleProcessMaterial
 	
@@ -72,6 +76,14 @@ func _physics_process(delta: float):
 			_catch()
 	elif state == FireflyState.CAUGHT:
 		_target_anchor = _player.global_position
+	elif state == FireflyState.FLYING_INTO_LANTERN:
+		if global_position.distance_to(_lantern.top_marker.global_position) <= 5:
+			state = FireflyState.IN_LANTERN
+	elif state == FireflyState.IN_LANTERN:
+		z_index = -10
+		var lantern_top_position = _lantern.top_marker.global_position;
+		global_position.x = clamp(global_position.x, lantern_top_position.x - 5, lantern_top_position.x + 5)
+		global_position.y = clamp(global_position.y, lantern_top_position.y - 2, lantern_top_position.y + 2)
 	
 	_target_position = _target_anchor + _target_offset
 	var direction_to_target: Vector2 = (_target_position - global_position).normalized()
@@ -86,7 +98,7 @@ func _physics_process(delta: float):
 	var dist_to_target: float = global_position.distance_to(_target_position)
 	var friction_coef: float = clamp(0.2 - dist_to_target * 0.005, 0.01, 0.06)
 	velocity -= velocity * friction_coef
-	velocity = velocity.limit_length(150)
+	velocity = velocity.limit_length(max_speed)
 
 	move_and_slide()
 	
@@ -111,8 +123,8 @@ func deposit():
 	catch_explosion.global_position = global_position
 
 func _update_target():
-	_target_offset.x = randf_range(-8, 8)
-	_target_offset.y = randf_range(-8, 8)
+	_target_offset.x = randf_range(-target_offset_radius, target_offset_radius)
+	_target_offset.y = randf_range(-target_offset_radius, target_offset_radius)
 
 func _draw():
 	#var direction_to_target: Vector2 = (_target_position - global_position).normalized()
@@ -123,7 +135,6 @@ func _draw():
 func _on_target_reposition_timer_timeout():
 	_update_target()
 	
-
 func uncatch():
 	global_position.x = _initial_anchor.x
 	global_position.y = _initial_anchor.y
@@ -131,3 +142,22 @@ func uncatch():
 	_target_anchor.y = _initial_anchor.y
 	velocity = Vector2.ZERO
 	state = FireflyState.ROAMING
+
+func arrange_around_lantern(angle: float):
+	_target_anchor.x = _lantern.top_marker.global_position.x + cos(angle) * 40
+	_target_anchor.y = _lantern.top_marker.global_position.y + sin(angle) * 40
+	target_offset_radius = 0
+	angle_spring_strength = 1
+	angle_spring_damping = 0.1
+	
+func move_toward_lantern():
+	_target_anchor = _lantern.top_marker.global_position
+	target_offset_radius = 0
+	angle_spring_strength = 2
+	angle_spring_damping = 0.2
+	max_speed = 50
+	state = FireflyState.FLYING_INTO_LANTERN
+	particles.emitting = false
+
+func _on_all_fireflies_deposited():
+	pass

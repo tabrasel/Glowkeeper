@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://vq262us8iqep"]
+[gd_scene load_steps=17 format=3 uid="uid://vq262us8iqep"]
 
 [ext_resource type="Texture2D" uid="uid://if310cb2g3ix" path="res://assets/tilesets/lantern.png" id="1_btv82"]
 [ext_resource type="Script" path="res://scripts/lantern.gd" id="1_vihed"]
 [ext_resource type="Texture2D" uid="uid://cblm3v1omrgnr" path="res://assets/spritesheets/spritesheet_lantern_deposit_sign.png" id="2_5hmh1"]
 [ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="2_uhpnt"]
+[ext_resource type="Texture2D" uid="uid://b3xl5gbgc7rsu" path="res://assets/spritesheets/sprite_glow2.png" id="6_gw0xw"]
 [ext_resource type="FontFile" uid="uid://cifu5lgij0env" path="res://assets/fonts/font_Simple.ttf" id="6_xkoe1"]
 [ext_resource type="Script" path="res://scripts/compass.gd" id="6_yop7w"]
 [ext_resource type="AudioStream" uid="uid://bid3o8iamdjt6" path="res://assets/sfx/sfx_firefly_deposited.wav" id="7_x6t73"]
@@ -81,11 +82,13 @@ _data = {
 "fade_out": SubResource("Animation_w1rdu")
 }
 
-[node name="Lantern" type="Node2D" node_paths=PackedStringArray("top_marker", "deposit_area", "deposit_sign_sprite", "deposit_audio_player", "firefly_count_group", "firefly_count_foreground_label", "firefly_count_background_label")]
+[node name="Lantern" type="Node2D" node_paths=PackedStringArray("top_marker", "deposit_area", "deposit_sign_sprite", "compass", "glow_sprite", "deposit_audio_player", "firefly_count_group", "firefly_count_foreground_label", "firefly_count_background_label")]
 script = ExtResource("1_vihed")
 top_marker = NodePath("TopMarker")
 deposit_area = NodePath("DepositArea")
 deposit_sign_sprite = NodePath("DepositSign")
+compass = NodePath("Compass")
+glow_sprite = NodePath("GlowSprite")
 firefly_resource = ExtResource("2_uhpnt")
 deposit_audio_player = NodePath("DepositAudioPlayer")
 firefly_count_group = NodePath("FireflyCount")
@@ -119,6 +122,14 @@ firefly_resource = ExtResource("2_uhpnt")
 [node name="SpinTimer" type="Timer" parent="Compass"]
 wait_time = 0.25
 one_shot = true
+
+[node name="GlowSprite" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(0.898039, 0.870588, 0.501961, 1)
+z_index = 10
+position = Vector2(0, -64)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("6_gw0xw")
 
 [node name="TopMarker" type="Marker2D" parent="."]
 position = Vector2(0, -64)

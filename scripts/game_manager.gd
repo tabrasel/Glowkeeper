@@ -2,6 +2,7 @@ extends Node
 class_name GameManager
 
 @export var firefly_resource: FireflyResource
+@export var animator: AnimationPlayer
 
 signal game_completed()
 
@@ -23,3 +24,4 @@ func _input(_event):
 
 func _on_all_fireflies_deposited():
 	game_completed.emit()
+	animator.play('ending')

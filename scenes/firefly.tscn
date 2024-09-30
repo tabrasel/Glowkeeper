@@ -70,12 +70,14 @@ sparkle_particle_material = ExtResource("3_spju7")
 catch_explosion_scene = ExtResource("2_1bfq2")
 firefly_resource = ExtResource("3_u4uxl")
 audio_player = NodePath("CaughtAudioPlayer")
+target_offset_radius = 8.0
 angle_spring_strength = 0.5
 angle_spring_strength_range = 0.15
 angle_spring_damping = 0.05
 angle_spring_damping_range = 0.01
 acceleration = 200.0
 acceleration_range = 40.0
+max_speed = 150.0
 
 [node name="Particles" type="GPUParticles2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.498039)
@@ -91,7 +93,7 @@ randomness = 0.5
 visible = false
 self_modulate = Color(0.898039, 0.870588, 0.501961, 0.498039)
 position = Vector2(1.90735e-06, 1.90735e-06)
-scale = Vector2(0.40625, 0.40625)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_wa47b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

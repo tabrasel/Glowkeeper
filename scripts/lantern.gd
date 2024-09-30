@@ -4,6 +4,8 @@ class_name Lantern
 @export var top_marker: Marker2D
 @export var deposit_area: Area2D
 @export var deposit_sign_sprite: AnimatedSprite2D
+@export var compass: Compass
+@export var glow_sprite: Sprite2D
 @export var firefly_resource: FireflyResource
 @export var deposit_audio_player: AudioStreamPlayer
 
@@ -23,6 +25,20 @@ func set_deposit_sign_active(active: bool):
 	else:
 		deposit_sign_sprite.play("idle")
 
+func deactivate_compass():
+	compass.start_idle_state()
+	
+func spin_compass():
+	compass.start_spinning_state()
+
+func point_compass():
+	compass.start_pointing_state()
+	
+func start_glowing():
+	glow_sprite.visible = true
+	var glow_sprite_tween: Tween = create_tween()
+	glow_sprite_tween.tween_property(glow_sprite, 'scale', Vector2(1, 1), 8)
+
 func _ready():
 	firefly_resource.connect("firefly_caught", _on_firefly_caught)
 	firefly_resource.connect("fireflies_deposited", _on_fireflies_deposited)
@@ -41,8 +57,7 @@ func _update_firefly_count(delta):
 	
 	var firefly_count_label_text: String =  str(firefly_resource.deposited_fireflies.size()) + "/20"
 	firefly_count_foreground_label.text = firefly_count_label_text
-	firefly_count_background_label.text = firefly_count_label_text
-	
+	firefly_count_background_label.text = firefly_count_label_text	
 
 func _on_firefly_caught():
 	set_deposit_sign_active(true)
