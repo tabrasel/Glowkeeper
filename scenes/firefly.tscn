@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b5vhyde5j8hpq"]
+[gd_scene load_steps=17 format=3 uid="uid://b5vhyde5j8hpq"]
 
 [ext_resource type="Script" path="res://scripts/firefly.gd" id="1_rvywd"]
 [ext_resource type="PackedScene" uid="uid://cmjcwfqlmkt8a" path="res://scenes/firefly_catch_explosion.tscn" id="2_1bfq2"]
@@ -7,7 +7,14 @@
 [ext_resource type="Material" uid="uid://b88a4xs11cix3" path="res://particle_materials/firefly_sparkle.tres" id="3_spju7"]
 [ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="3_u4uxl"]
 [ext_resource type="Texture2D" uid="uid://loyxxbya44u4" path="res://assets/particles/particle_sparkle.png" id="5_vaafw"]
+[ext_resource type="Texture2D" uid="uid://glk3b6l3lb5g" path="res://assets/spritesheets/sprite_glow.png" id="7_wa47b"]
 [ext_resource type="AudioStream" uid="uid://dfla1lta3rtqa" path="res://assets/sfx/sfx_firefly_caught.wav" id="8_ta0kn"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bhb0h"]
+particles_animation = true
+particles_anim_h_frames = 10
+particles_anim_v_frames = 1
+particles_anim_loop = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3s15h"]
 atlas = ExtResource("2_isfwx")
@@ -53,15 +60,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_frunp"]
 radius = 15.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bhb0h"]
-particles_animation = true
-particles_anim_h_frames = 10
-particles_anim_v_frames = 1
-particles_anim_loop = true
-
-[node name="Firefly" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "particles", "audio_player") groups=["Fireflies"]]
+[node name="Firefly" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "glow_sprite", "particles", "audio_player") groups=["Fireflies"]]
 script = ExtResource("1_rvywd")
 animated_sprite = NodePath("AnimatedSprite2D")
+glow_sprite = NodePath("GlowSprite")
 particles = NodePath("Particles")
 cry_particle_material = ExtResource("2_fpym0")
 sparkle_particle_material = ExtResource("3_spju7")
@@ -74,6 +76,23 @@ angle_spring_damping = 0.05
 angle_spring_damping_range = 0.01
 acceleration = 200.0
 acceleration_range = 40.0
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.498039)
+material = SubResource("CanvasItemMaterial_bhb0h")
+amount = 3
+process_material = ExtResource("2_fpym0")
+texture = ExtResource("5_vaafw")
+preprocess = 5.0
+explosiveness = 0.3
+randomness = 0.5
+
+[node name="GlowSprite" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(0.898039, 0.870588, 0.501961, 0.498039)
+position = Vector2(1.90735e-06, 1.90735e-06)
+scale = Vector2(0.40625, 0.40625)
+texture = ExtResource("7_wa47b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_u7m0g")
@@ -88,15 +107,6 @@ disabled = true
 [node name="TargetRepositionTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
-
-[node name="Particles" type="GPUParticles2D" parent="."]
-material = SubResource("CanvasItemMaterial_bhb0h")
-amount = 3
-process_material = ExtResource("2_fpym0")
-texture = ExtResource("5_vaafw")
-preprocess = 5.0
-explosiveness = 0.3
-randomness = 0.5
 
 [node name="CaughtAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_ta0kn")

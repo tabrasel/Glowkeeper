@@ -55,12 +55,15 @@ func _ready():
 func _process(_delta: float):
 	if state == FireflyState.ROAMING:
 		animated_sprite.play('roam')
+		glow_sprite.visible = false
 		particles.process_material = cry_particle_material
 	elif state == FireflyState.CAUGHT:
-		animated_sprite.play('roam')
+		animated_sprite.play('caught')
+		glow_sprite.visible = true
 		particles.process_material = sparkle_particle_material
 	elif state == FireflyState.DEPOSITED:
 		animated_sprite.play('caught')
+		glow_sprite.visible = true
 		particles.process_material = sparkle_particle_material
 
 func _physics_process(delta: float):
