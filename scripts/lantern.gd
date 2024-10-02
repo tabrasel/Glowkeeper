@@ -37,7 +37,7 @@ func point_compass():
 func start_glowing():
 	glow_sprite.visible = true
 	var glow_sprite_tween: Tween = create_tween()
-	glow_sprite_tween.tween_property(glow_sprite, 'scale', Vector2(1, 1), 8)
+	glow_sprite_tween.tween_property(glow_sprite, 'scale', Vector2(1, 1), 4)
 
 func _ready():
 	firefly_resource.connect("firefly_caught", _on_firefly_caught)

@@ -96,6 +96,14 @@ firefly_count_foreground_label = NodePath("FireflyCount/ForegroundLabel")
 firefly_count_background_label = NodePath("FireflyCount/BackgroundLabel")
 firefly_count_fade_speed = 8.0
 
+[node name="GlowSprite" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(0.898039, 0.870588, 0.501961, 1)
+z_index = 10
+position = Vector2(0, -64)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("6_gw0xw")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -37)
 texture = ExtResource("1_btv82")
@@ -122,14 +130,6 @@ firefly_resource = ExtResource("2_uhpnt")
 [node name="SpinTimer" type="Timer" parent="Compass"]
 wait_time = 0.25
 one_shot = true
-
-[node name="GlowSprite" type="Sprite2D" parent="."]
-visible = false
-self_modulate = Color(0.898039, 0.870588, 0.501961, 1)
-z_index = 10
-position = Vector2(0, -64)
-scale = Vector2(1e-05, 1e-05)
-texture = ExtResource("6_gw0xw")
 
 [node name="TopMarker" type="Marker2D" parent="."]
 position = Vector2(0, -64)

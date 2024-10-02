@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://27c45s4m5sou"]
+[gd_scene load_steps=31 format=3 uid="uid://27c45s4m5sou"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_3yjid"]
 [ext_resource type="PackedScene" uid="uid://bubmgpj2we3km" path="res://scenes/player.tscn" id="1_apqri"]
@@ -15,6 +15,7 @@
 [ext_resource type="FontFile" uid="uid://cifu5lgij0env" path="res://assets/fonts/font_Simple.ttf" id="11_1xurv"]
 [ext_resource type="PackedScene" uid="uid://ce77ibv62vkq" path="res://scenes/water.tscn" id="13_6lylm"]
 [ext_resource type="AudioStream" uid="uid://bhecwcy1wnxku" path="res://assets/sfx/sfx_rain.wav" id="15_3d82r"]
+[ext_resource type="AudioStream" uid="uid://ddkc0g8g4xwej" path="res://assets/sfx/sfx_rumble.mp3" id="16_3khft"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qwvty"]
 resource_name = "world"
@@ -345,7 +346,7 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_1tpg8"]
 resource_name = "ending"
-length = 15.0
+length = 16.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -370,7 +371,7 @@ tracks/1/path = NodePath("TileMap/Lantern")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 6.5, 10.1),
+"times": PackedFloat32Array(0, 7, 10.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -396,6 +397,54 @@ tracks/2/keys = {
 "args": [],
 "method": &"start_shaking"
 }]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera/HUD/TransitionOverlay:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 13.5, 15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0.898039, 0.870588, 0.501961, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RainAudioPlayer:volume_db")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(15, 16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-5.0, -80.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RumbleAudioPlayer:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(8.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RumbleAudioPlayer:volume_db")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(15, 15.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p3e4d"]
@@ -642,10 +691,13 @@ position = Vector2(-1050, -525)
 [node name="Marker2D2" type="Marker2D" parent="."]
 position = Vector2(1400, 875)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="RainAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_3d82r")
 volume_db = -5.0
 autoplay = true
+
+[node name="RumbleAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_3khft")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
