@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b5vhyde5j8hpq"]
+[gd_scene load_steps=23 format=3 uid="uid://b5vhyde5j8hpq"]
 
 [ext_resource type="Script" path="res://scripts/firefly.gd" id="1_rvywd"]
 [ext_resource type="PackedScene" uid="uid://cmjcwfqlmkt8a" path="res://scenes/firefly_catch_explosion.tscn" id="2_1bfq2"]
@@ -7,8 +7,51 @@
 [ext_resource type="Material" uid="uid://b88a4xs11cix3" path="res://particle_materials/firefly_sparkle.tres" id="3_spju7"]
 [ext_resource type="Resource" uid="uid://n0lyfieda8hv" path="res://resources/firefly_resource.tres" id="3_u4uxl"]
 [ext_resource type="Texture2D" uid="uid://loyxxbya44u4" path="res://assets/particles/particle_sparkle.png" id="5_vaafw"]
-[ext_resource type="Texture2D" uid="uid://glk3b6l3lb5g" path="res://assets/spritesheets/sprite_glow.png" id="7_wa47b"]
 [ext_resource type="AudioStream" uid="uid://dfla1lta3rtqa" path="res://assets/sfx/sfx_firefly_caught.wav" id="8_ta0kn"]
+[ext_resource type="Texture2D" uid="uid://d17xch0kbvcny" path="res://assets/spritesheets/spritesheet_glow.png" id="10_17a7v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycvl6"]
+atlas = ExtResource("10_17a7v")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orunv"]
+atlas = ExtResource("10_17a7v")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24f81"]
+atlas = ExtResource("10_17a7v")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgboq"]
+atlas = ExtResource("10_17a7v")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajs2p"]
+atlas = ExtResource("10_17a7v")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hypc1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycvl6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orunv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24f81")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgboq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajs2p")
+}],
+"loop": false,
+"name": &"flicker_on",
+"speed": 10.0
+}]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bhb0h"]
 particles_animation = true
@@ -79,6 +122,15 @@ acceleration = 200.0
 acceleration_range = 40.0
 max_speed = 150.0
 
+[node name="GlowSprite" type="AnimatedSprite2D" parent="."]
+visible = false
+self_modulate = Color(0.898039, 0.870588, 0.501961, 0.498039)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_hypc1")
+animation = &"flicker_on"
+frame = 4
+frame_progress = 1.0
+
 [node name="Particles" type="GPUParticles2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.498039)
 material = SubResource("CanvasItemMaterial_bhb0h")
@@ -88,13 +140,6 @@ texture = ExtResource("5_vaafw")
 preprocess = 5.0
 explosiveness = 0.3
 randomness = 0.5
-
-[node name="GlowSprite" type="Sprite2D" parent="."]
-visible = false
-self_modulate = Color(0.898039, 0.870588, 0.501961, 0.498039)
-position = Vector2(1.90735e-06, 1.90735e-06)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("7_wa47b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_u7m0g")

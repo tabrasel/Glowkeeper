@@ -4,7 +4,7 @@ class_name Firefly
 enum FireflyState {ROAMING, CAUGHT, DEPOSITED, FLYING_INTO_LANTERN, IN_LANTERN}
 
 @export var animated_sprite: AnimatedSprite2D
-@export var glow_sprite: Sprite2D
+@export var glow_sprite: AnimatedSprite2D
 @export var particles: GPUParticles2D
 @export var cry_particle_material: ParticleProcessMaterial
 @export var sparkle_particle_material: ParticleProcessMaterial
@@ -111,6 +111,8 @@ func _catch():
 	var catch_explosion = catch_explosion_scene.instantiate()
 	add_child(catch_explosion)
 	catch_explosion.global_position = global_position
+	
+	glow_sprite.play('flicker_on')
 	
 	audio_player.play()
 
