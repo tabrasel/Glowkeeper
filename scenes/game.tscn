@@ -492,7 +492,8 @@ gizmo_extents = 12.0
 [node name="SafeArea" type="Area2D" parent="TileMap"]
 visible = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/SafeArea"]
+[node name="SafeAreaCollisionShape2D" type="CollisionShape2D" parent="TileMap/SafeArea"]
+unique_name_in_owner = true
 position = Vector2(100, -57)
 shape = SubResource("RectangleShape2D_3kv1w")
 
@@ -706,7 +707,6 @@ libraries = {
 
 [connection signal="game_completed" from="GameManager" to="Player" method="_on_game_manager_game_completed"]
 [connection signal="game_completed" from="GameManager" to="TileMap/Lantern" method="_on_game_manager_game_completed"]
-[connection signal="game_completed" from="GameManager" to="Camera" method="_on_game_manager_game_completed"]
 [connection signal="game_completed" from="GameManager" to="Camera/HUD" method="_on_game_manager_game_completed"]
 [connection signal="player_died" from="Player" to="TileMap" method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="Camera/HUD" method="_on_player_player_died"]
