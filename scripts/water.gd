@@ -85,10 +85,25 @@ func _process(delta: float) -> void:
 
 
 func _on_ripple_timer_timeout() -> void:
+	"""
+	Make several ripples offscreen
+	"""
 	var camera_viewport_width: float = camera.get_viewport_rect().size.x
-	var offset: float = (camera_viewport_width / 2) + 25
-	var ripple_x: float = camera.global_position.x + offset * (1 if randf() < 0.5 else -1)
-	_make_ripple(ripple_x, randf_range(5, 25) * (1 if randf() < 0.5 else -1))
+	#var offset_min: float = (camera_viewport_width / 2) + 25
+	#var offset_max: float = (camera_viewport_width / 2) + 25
+	var offset_min: float = (175 / 2) + 25
+	var offset_max: float = (350 / 2) + 25
+	
+	for i in range(3):
+		var offset: float = randf_range(offset_min, offset_max)
+		var ripple_x: float = camera.global_position.x - offset
+		_make_ripple(ripple_x, randf_range(5, 25) * (1 if randf() < 0.5 else -1))
+	
+	for i in range(3):
+		var offset: float = randf_range(offset_min, offset_max)
+		var ripple_x: float = camera.global_position.x + offset
+		_make_ripple(ripple_x, randf_range(5, 25) * (1 if randf() < 0.5 else -1))
+	
 	ripple_timer.wait_time = randf_range(0.25, 2)
 
 
@@ -99,7 +114,10 @@ func _on_area_2d_body_entered(body: Node) -> void:
 
 func _on_area_2d_body_exited(body: Node) -> void:
 	if body is Player:
-		_make_ripple(body.global_position.x, -20)
+		var player = body as Player
+		if player.is_alive:
+			_make_ripple(body.global_position.x, -20)
+			splash_audio_player.play()
 
 
 func _make_ripple(x: float, velocity: float) -> void:
