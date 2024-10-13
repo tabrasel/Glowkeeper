@@ -1,9 +1,6 @@
-- X Dynamic water
-- X Next firefly indicator
-- Better firefly counter
-- X Lose progress on death
-- X Deposit fireflies
-- X Caught/uncaught firefly visuals
+- Move the firefly in the Donkey Kong room up a bit so player can't reach it from below
+- Secret
 - Intro cutscene
 - Outro cutscene
-- X Use animation for death fadeout/fadein, not timers and scripts
+- Room names
+- Background music

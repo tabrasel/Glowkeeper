@@ -1,0 +1,155 @@
+[gd_scene load_steps=14 format=3 uid="uid://beil3xx675iw2"]
+
+[ext_resource type="Script" path="res://scripts/checkpoint.gd" id="1_fdtvq"]
+[ext_resource type="Texture2D" uid="uid://b33ruf3pbtwg7" path="res://assets/spritesheets/checkpoint_glow.png" id="1_p275d"]
+[ext_resource type="Texture2D" uid="uid://hjeswta1ljfo" path="res://assets/spritesheets/checkpoint_lamp.png" id="2_2uo8o"]
+[ext_resource type="Texture2D" uid="uid://glk3b6l3lb5g" path="res://assets/spritesheets/sprite_glow.png" id="2_ixuoo"]
+
+[sub_resource type="Gradient" id="Gradient_pjc2p"]
+colors = PackedColorArray(1, 1, 1, 0.368627, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kofv2"]
+gradient = SubResource("Gradient_pjc2p")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jdtjf"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -2, 0)
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 30.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+damping_min = 40.0
+damping_max = 50.0
+color_ramp = SubResource("GradientTexture1D_kofv2")
+
+[sub_resource type="Animation" id="Animation_i8d7c"]
+resource_name = "glow"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pbb5i"]
+_data = {
+"glow": SubResource("Animation_i8d7c")
+}
+
+[sub_resource type="Animation" id="Animation_ofp6e"]
+resource_name = "inactive"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GroundGlow/Sprite:self_modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.25, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2)
+}
+
+[sub_resource type="Animation" id="Animation_quv3h"]
+resource_name = "glow"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GroundGlow:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.2, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0.2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v45jk"]
+_data = {
+"glow": SubResource("Animation_quv3h"),
+"inactive": SubResource("Animation_ofp6e")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0c2h"]
+size = Vector2(16, 2)
+
+[node name="Checkpoint" type="Node2D" node_paths=PackedStringArray("lamp_glow", "lamp_glow_rect", "ground_glow", "ground_glow_sprite", "activation_particles", "spawn_point", "ground_glow_animation_player", "lamp_glow_animation_player") groups=["Checkpoints"]]
+script = ExtResource("1_fdtvq")
+lamp_glow = NodePath("LampGlow")
+lamp_glow_rect = NodePath("LampGlow/Rect")
+ground_glow = NodePath("GroundGlow")
+ground_glow_sprite = NodePath("GroundGlow/Sprite")
+activation_particles = NodePath("ActivationParticles")
+spawn_point = NodePath("SpawnPoint")
+ground_glow_animation_player = NodePath("GroundGlow/AnimationPlayer")
+lamp_glow_animation_player = NodePath("LampGlow/AnimationPlayer")
+
+[node name="ActivationParticles" type="GPUParticles2D" parent="."]
+position = Vector2(0, -9)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_jdtjf")
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.9
+
+[node name="LampGlow" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0.5)
+
+[node name="Sprite" type="Sprite2D" parent="LampGlow"]
+position = Vector2(-1, -10)
+scale = Vector2(0.453125, 0.453125)
+texture = ExtResource("2_ixuoo")
+
+[node name="Rect" type="ColorRect" parent="LampGlow"]
+offset_left = -3.0
+offset_top = -11.0
+offset_right = 2.0
+offset_bottom = -7.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LampGlow"]
+libraries = {
+"": SubResource("AnimationLibrary_pbb5i")
+}
+
+[node name="LampSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("2_2uo8o")
+
+[node name="GroundGlow" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0.655228)
+
+[node name="Sprite" type="Sprite2D" parent="GroundGlow"]
+position = Vector2(0, -1)
+scale = Vector2(1, 0.979407)
+texture = ExtResource("1_p275d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GroundGlow"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_v45jk")
+}
+autoplay = "inactive"
+
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(0, -7)
+
+[node name="ActivationArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationArea"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_u0c2h")
+
+[connection signal="body_entered" from="ActivationArea" to="." method="_on_activation_area_body_entered"]

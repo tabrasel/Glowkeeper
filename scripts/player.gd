@@ -24,6 +24,8 @@ var _was_on_ceiling: bool
 
 var is_alive: bool = true
 var _is_controllable: bool = true
+var _spawn_position: Vector2
+var _spawn_direction: int
 
 const GROUND_ACCELERATION = 780
 const AIR_ACCELERATION = 600
@@ -37,14 +39,26 @@ const JUMP_BUFFER_SECS = 0.07
 
 
 func _ready():
+	_spawn_position = (map as GameMap).player_spawn_point.global_position
+	_spawn_direction = 1
 	spawn()
 
 func spawn():
 	is_alive = true
 	_is_controllable = true
+	global_position = _spawn_position
+	_direction_x = _spawn_direction
+	velocity = Vector2.ZERO
 	
-	_direction_x = 1
-	global_position = (map as GameMap).player_spawn_point.global_position
+func set_spawn_data(spawn_position: Vector2):
+	_spawn_position = spawn_position
+	_spawn_direction = _direction_x
+	
+func jump():
+	velocity.y = JUMP_LAUNCH_VELOCITY
+	_jump_buffer_time_remaining = 0
+	_cayote_time_remaining = 0
+	jump_audio_player.play(0.1)
 
 func _process(_delta):
 	if _is_controllable:
@@ -71,14 +85,6 @@ func _process(_delta):
 		
 	if is_on_ceiling() and !_was_on_ceiling:
 			head_hit_audio_player.play()
-
-
-func jump() -> void:
-	velocity.y = JUMP_LAUNCH_VELOCITY
-	_jump_buffer_time_remaining = 0
-	_cayote_time_remaining = 0
-	jump_audio_player.play(0.1)
-
 
 func _physics_process(delta):
 	# Apply gravity
