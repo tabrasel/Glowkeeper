@@ -1,5 +1,7 @@
+class_name GameplayCamera
 extends Camera2D
 
+@export var collision_area: Area2D
 
 @onready var player = %Player
 @onready var safe_area_collision_shape: CollisionShape2D = %SafeAreaCollisionShape2D
@@ -12,6 +14,7 @@ var _is_shaking: bool
 func _ready():
 	view_size = get_viewport_rect().size
 	limit_rect = safe_area_collision_shape.shape.get_rect()
+	print(collision_area.get_rid())
 
 func _process(_delta):
 	if player.is_alive:

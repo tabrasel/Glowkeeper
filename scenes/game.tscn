@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://27c45s4m5sou"]
+[gd_scene load_steps=34 format=3 uid="uid://27c45s4m5sou"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_3yjid"]
 [ext_resource type="PackedScene" uid="uid://bubmgpj2we3km" path="res://scenes/player.tscn" id="1_apqri"]
@@ -346,6 +346,8 @@ _data = {
 "reset": SubResource("Animation_5xtre")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u6f0v"]
+
 [sub_resource type="Animation" id="Animation_1tpg8"]
 resource_name = "ending"
 length = 16.0
@@ -616,12 +618,13 @@ position = Vector2(306, 563)
 [node name="Firefly20" parent="Fireflies" instance=ExtResource("4_cv8cd")]
 position = Vector2(-36, 660)
 
-[node name="Camera" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("collision_area")]
 unique_name_in_owner = true
 z_index = 200
 position = Vector2(87, 87)
 editor_draw_limits = true
 script = ExtResource("3_sdril")
+collision_area = NodePath("Area2D")
 
 [node name="HUD" type="Control" parent="Camera" node_paths=PackedStringArray("animation_player", "transition_display", "letterbox")]
 layout_mode = 3
@@ -703,6 +706,11 @@ script = SubResource("GDScript_hhsp1")
 libraries = {
 "": SubResource("AnimationLibrary_ljbfi")
 }
+
+[node name="Area2D" type="Area2D" parent="Camera"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Area2D"]
+shape = SubResource("RectangleShape2D_u6f0v")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(-1050, -525)
