@@ -14,7 +14,6 @@ var _is_shaking: bool
 func _ready():
 	view_size = get_viewport_rect().size
 	limit_rect = safe_area_collision_shape.shape.get_rect()
-	print(collision_area.get_rid())
 
 func _process(_delta):
 	if player.is_alive:
