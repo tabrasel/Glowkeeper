@@ -598,7 +598,7 @@ title = "Three Roads Diverged"
 
 [node name="RoomArea14" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-1575, 525)
-title = "Hideaway"
+title = "Hideout"
 
 [node name="RoomArea15" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-1400, 525)
@@ -606,7 +606,7 @@ title = "Cold Feet"
 
 [node name="RoomArea16" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-350, 525)
-title = "Overzealous"
+title = "Self Control"
 
 [node name="RoomArea17" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(175, 525)
@@ -650,15 +650,15 @@ title = "Over the Edge"
 
 [node name="RoomArea27" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-175, 525)
-title = "Practice Patience"
+title = "Don't Be Hasty"
 
 [node name="RoomArea28" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-175, 350)
-title = "Jungle Jim"
+title = "Jungle Gym"
 
 [node name="RoomArea29" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(0, 350)
-title = "In the Tunnels"
+title = "Twisty Tunnels"
 
 [node name="RoomArea30" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-525, 525)
@@ -762,7 +762,7 @@ title = "Overhang"
 
 [node name="RoomArea55" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(1225, 350)
-title = "Too Late"
+title = "Missed Opportunity"
 
 [node name="RoomArea56" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(350, 350)
@@ -774,7 +774,7 @@ title = "...And the Pendulum"
 
 [node name="RoomArea58" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(1050, 525)
-title = "AAAAAA"
+title = "Splash"
 
 [node name="RoomArea59" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(700, 0)
@@ -802,7 +802,7 @@ title = "Front Steps"
 
 [node name="RoomArea65" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(350, -175)
-title = "Firmament"
+title = "Freefall"
 
 [node name="Water" parent="." instance=ExtResource("13_6lylm")]
 position = Vector2(-1776, 688)
