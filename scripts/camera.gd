@@ -1,5 +1,7 @@
+class_name GameplayCamera
 extends Camera2D
 
+@export var collision_area: Area2D
 
 @onready var player = %Player
 @onready var safe_area_collision_shape: CollisionShape2D = %SafeAreaCollisionShape2D

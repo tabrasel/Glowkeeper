@@ -27,9 +27,6 @@ func set_safe_area() -> void:
 	var collision_shape: CollisionShape2D = CollisionShape2D.new()
 	collision_shape.shape = rectangle
 	#safe_area.add_child(collision_shape)
-	
-	#print(safe_area.global_position)
-	#print(collision_shape.shape.get_rect().position + safe_area.global_position)
 
 
 func _on_player_player_died():
