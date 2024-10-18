@@ -903,6 +903,7 @@ room_title_label = NodePath("RoomTitleLabel")
 firefly_resource = ExtResource("10_e5tni")
 
 [node name="RoomTitleLabel" type="Label" parent="Camera/HUD"]
+z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
