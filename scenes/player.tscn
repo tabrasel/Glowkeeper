@@ -61,7 +61,7 @@ land_audio_player = NodePath("AudioPlayers/LandAudioPlayer")
 head_hit_audio_player = NodePath("AudioPlayers/HeadHitAudioPlayer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -0.799999)
+position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_l6xt5")
 animation = &"idle"
 
