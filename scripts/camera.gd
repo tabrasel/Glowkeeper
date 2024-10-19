@@ -19,9 +19,12 @@ func _process(_delta):
 	if player.is_alive:
 		var target_position = player.position
 		target_position = target_position.clamp(limit_rect.position, limit_rect.position + limit_rect.size)
-		
-		position.x = floor(target_position.x / view_size.x) * view_size.x + view_size.x / 2
-		position.y = floor(target_position.y / view_size.y) * view_size.y + view_size.y / 2
+	
+		var col: int = floor(target_position.x / view_size.x)
+		var row: int = floor(target_position.y / view_size.y)
+
+		position.x = ceil(view_size.x / 2) + view_size.x * col
+		position.y = ceil(view_size.y / 2) + view_size.y * row
 
 		if _is_shaking:
 			position.x += randi_range(-1, 1)
