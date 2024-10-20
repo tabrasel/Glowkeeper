@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://vq262us8iqep"]
+[gd_scene load_steps=18 format=3 uid="uid://vq262us8iqep"]
 
 [ext_resource type="Texture2D" uid="uid://if310cb2g3ix" path="res://assets/tilesets/lantern.png" id="1_btv82"]
 [ext_resource type="Script" path="res://scripts/lantern.gd" id="1_vihed"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b3xl5gbgc7rsu" path="res://assets/spritesheets/sprite_glow2.png" id="6_gw0xw"]
 [ext_resource type="FontFile" uid="uid://cifu5lgij0env" path="res://assets/fonts/font_Simple.ttf" id="6_xkoe1"]
 [ext_resource type="Script" path="res://scripts/compass.gd" id="6_yop7w"]
+[ext_resource type="Texture2D" uid="uid://dedpr3e4dvy0s" path="res://assets/spritesheets/sprite_compass_mask.png" id="7_kvmq6"]
 [ext_resource type="AudioStream" uid="uid://bid3o8iamdjt6" path="res://assets/sfx/sfx_firefly_deposited.wav" id="7_x6t73"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3yhgl"]
@@ -104,23 +105,12 @@ position = Vector2(0, -64)
 scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("6_gw0xw")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="LanternSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -37)
 texture = ExtResource("1_btv82")
 
-[node name="DepositSign" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -12)
-sprite_frames = SubResource("SpriteFrames_u4sbh")
-animation = &"idle"
-
-[node name="DepositArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DepositArea"]
-position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_3m7kd")
-
 [node name="Compass" type="Node2D" parent="." node_paths=PackedStringArray("spin_timer")]
-position = Vector2(0, -36)
+position = Vector2(0, -35)
 script = ExtResource("6_yop7w")
 spring_strength = 0.2
 spring_damping = 0.04
@@ -130,6 +120,21 @@ firefly_resource = ExtResource("2_uhpnt")
 [node name="SpinTimer" type="Timer" parent="Compass"]
 wait_time = 0.25
 one_shot = true
+
+[node name="DepositSign" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_u4sbh")
+animation = &"idle"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -35)
+texture = ExtResource("7_kvmq6")
+
+[node name="DepositArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DepositArea"]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_3m7kd")
 
 [node name="TopMarker" type="Marker2D" parent="."]
 position = Vector2(0, -64)
@@ -177,6 +182,6 @@ libraries = {
 [node name="DepositAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_x6t73")
 
+[connection signal="timeout" from="Compass/SpinTimer" to="Compass" method="_on_spin_timer_timeout"]
 [connection signal="body_entered" from="DepositArea" to="." method="_on_deposit_area_body_entered"]
 [connection signal="body_exited" from="DepositArea" to="." method="_on_deposit_area_body_exited"]
-[connection signal="timeout" from="Compass/SpinTimer" to="Compass" method="_on_spin_timer_timeout"]
