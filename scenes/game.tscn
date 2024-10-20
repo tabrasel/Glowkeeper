@@ -805,7 +805,7 @@ collision_area = NodePath("RoomCollisionArea")
 [node name="HUD" type="Control" parent="Camera" node_paths=PackedStringArray("animation_player", "transition_display", "letterbox", "room_title_label")]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -87.0
+offset_left = -88.0
 offset_top = -87.0
 offset_right = 88.0
 offset_bottom = 88.0
