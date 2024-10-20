@@ -107,10 +107,11 @@ explosiveness = 0.9
 
 [node name="LampGlow" type="Node2D" parent="."]
 modulate = Color(1, 1, 1, 0.5)
+position = Vector2(1, 0)
 
 [node name="Sprite" type="Sprite2D" parent="LampGlow"]
-position = Vector2(-1, -10)
-scale = Vector2(0.453125, 0.453125)
+position = Vector2(-1, -9)
+scale = Vector2(0.53125, 0.53125)
 texture = ExtResource("2_ixuoo")
 
 [node name="Rect" type="ColorRect" parent="LampGlow"]
