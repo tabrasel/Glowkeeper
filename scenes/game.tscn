@@ -76,9 +76,6 @@ tile_size = Vector2i(25, 25)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_qwvty")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kv1w"]
-size = Vector2(2976, 1238)
-
 [sub_resource type="Gradient" id="Gradient_tlvqi"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0.380392, 0.454902, 0.682353, 0.196078)
@@ -98,6 +95,9 @@ initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 gravity = Vector3(0, 0, 0)
 color_ramp = SubResource("GradientTexture1D_ew3ha")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kv1w"]
+size = Vector2(2975, 1050)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2n0rj"]
 resource_local_to_scene = true
@@ -401,26 +401,18 @@ layer_3/tile_data = PackedInt32Array(720891, 327680, 3, 786427, 327680, 3, 98306
 script = ExtResource("4_k1bbe")
 room_size_in_tiles = 7
 player_spawn_point = NodePath("PlayerSpawnPoint")
-safe_area = NodePath("SafeArea")
+safe_area = NodePath("../MapBoundsArea")
 rain_particles = NodePath("RainParticles")
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="TileMap"]
 position = Vector2(-38, 0)
 gizmo_extents = 12.0
 
-[node name="SafeArea" type="Area2D" parent="TileMap"]
-visible = false
-
-[node name="SafeAreaCollisionShape2D" type="CollisionShape2D" parent="TileMap/SafeArea"]
-unique_name_in_owner = true
-position = Vector2(-163, -57)
-shape = SubResource("RectangleShape2D_3kv1w")
-
 [node name="Sky" type="Sprite2D" parent="TileMap"]
 modulate = Color(0.168627, 0.211765, 0.356863, 1)
 z_index = -10
-position = Vector2(-241, -59.4972)
-scale = Vector2(18, 7.00571)
+position = Vector2(-171, 25.4826)
+scale = Vector2(17, 6.04003)
 texture = ExtResource("2_i0him")
 
 [node name="RainParticles" type="GPUParticles2D" parent="TileMap"]
@@ -458,6 +450,7 @@ position = Vector2(-513, 500)
 position = Vector2(887, 325)
 
 [node name="Rooms" type="Node2D" parent="TileMap"]
+visible = false
 
 [node name="RoomArea" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 title = "The Lantern"
@@ -734,8 +727,15 @@ title = "All Clear"
 position = Vector2(1225, -175)
 title = "The Wind-Up"
 
+[node name="MapBoundsArea" type="Area2D" parent="."]
+
+[node name="SafeAreaCollisionShape2D" type="CollisionShape2D" parent="MapBoundsArea"]
+unique_name_in_owner = true
+position = Vector2(-87.5, 175)
+shape = SubResource("RectangleShape2D_3kv1w")
+
 [node name="Water" parent="." instance=ExtResource("13_6lylm")]
-position = Vector2(-1776, 688)
+position = Vector2(-1659, 688)
 spread = 4
 
 [node name="Area2D" parent="Water" index="0"]
@@ -810,13 +810,14 @@ position = Vector2(306, 563)
 [node name="Firefly20" parent="Fireflies" instance=ExtResource("4_cv8cd")]
 position = Vector2(-36, 660)
 
-[node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("collision_area")]
+[node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("map_bounds_area_shape", "room_collision_area")]
 unique_name_in_owner = true
 z_index = 200
 position = Vector2(87, 87)
 editor_draw_limits = true
 script = ExtResource("3_sdril")
-collision_area = NodePath("RoomCollisionArea")
+map_bounds_area_shape = NodePath("../MapBoundsArea/SafeAreaCollisionShape2D")
+room_collision_area = NodePath("RoomCollisionArea")
 
 [node name="HUD" type="Control" parent="Camera" node_paths=PackedStringArray("animation_player", "transition_display", "letterbox", "room_title_label")]
 layout_mode = 3
@@ -918,12 +919,6 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/RoomCollisionArea"]
 shape = SubResource("RectangleShape2D_ghpfd")
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(-1050, -525)
-
-[node name="Marker2D2" type="Marker2D" parent="."]
-position = Vector2(1400, 875)
-
 [node name="RainAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_3d82r")
 volume_db = -5.0
@@ -942,6 +937,6 @@ libraries = {
 [connection signal="game_completed" from="GameManager" to="Camera/HUD" method="_on_game_manager_game_completed"]
 [connection signal="player_died" from="Player" to="TileMap" method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="Camera/HUD" method="_on_player_player_died"]
-[connection signal="body_exited" from="TileMap/SafeArea" to="Player" method="_on_safe_area_body_exited"]
+[connection signal="body_exited" from="MapBoundsArea" to="Player" method="_on_safe_area_body_exited"]
 
 [editable path="Water"]
