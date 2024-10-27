@@ -1,5 +1,4 @@
 - Move the firefly in the Donkey Kong room up a bit so player can't reach it from below
-- Secret
 - Intro cutscene
 - Outro cutscene
 - Room names
