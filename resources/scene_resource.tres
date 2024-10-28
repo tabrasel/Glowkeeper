@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SceneResource" load_steps=2 format=3 uid="uid://dqm12yf1nj7kf"]
+
+[ext_resource type="Script" path="res://scripts/resources/scene_resource.gd" id="1_wx18b"]
+
+[resource]
+script = ExtResource("1_wx18b")
+cutscene_scene_path = "res://scenes/island_cutscene.tscn"
+gameplay_scene_path = "res://scenes/game.tscn"

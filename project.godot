@@ -11,10 +11,14 @@ config_version=5
 [application]
 
 config/name="Small World"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://scenes/island_cutscene.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 boot_splash/show_image=false
 config/icon="res://assets/icon.svg"
+
+[autoload]
+
+GlobalData="*res://scripts/global_data.gd"
 
 [display]
 

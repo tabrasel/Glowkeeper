@@ -2,9 +2,15 @@ extends Node
 class_name GameManager
 
 @export var firefly_resource: FireflyResource
+@export var scene_resource: SceneResource
 @export var animator: AnimationPlayer
 
 signal game_completed()
+
+
+func switch_to_ending_scene():
+	var scene_tree: SceneTree = get_tree()
+	scene_tree.change_scene_to_file(scene_resource.cutscene_scene_path)
 
 
 func _ready():
@@ -23,5 +29,6 @@ func _input(_event):
 
 
 func _on_all_fireflies_deposited():
+	GlobalData.is_game_ended = true
 	game_completed.emit()
 	animator.play('ending')

@@ -1,12 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://86m8vtm5gjb3"]
+[gd_scene load_steps=22 format=3 uid="uid://86m8vtm5gjb3"]
 
 [ext_resource type="Script" path="res://scripts/island_cutscene.gd" id="1_qdfys"]
-[ext_resource type="PackedScene" uid="uid://27c45s4m5sou" path="res://scenes/game.tscn" id="2_qrmyg"]
+[ext_resource type="Resource" uid="uid://dqm12yf1nj7kf" path="res://resources/scene_resource.tres" id="2_o6qxo"]
 [ext_resource type="Texture2D" uid="uid://cf4rbytgp54ul" path="res://assets/cutscene/island.png" id="3_vribs"]
 [ext_resource type="Texture2D" uid="uid://dumx7f5kgs323" path="res://assets/spritesheets/sprite_thundercloud.png" id="4_oaawp"]
 [ext_resource type="Texture2D" uid="uid://c4rkhpvimh4ud" path="res://assets/spritesheets/spritesheet_lightning.png" id="5_8rfmo"]
 [ext_resource type="Texture2D" uid="uid://c8ff26qn4sppm" path="res://assets/cutscene/fade_dither.png" id="6_8f12j"]
 [ext_resource type="Script" path="res://scripts/lightning.gd" id="6_uyb8h"]
+[ext_resource type="FontFile" uid="uid://cifu5lgij0env" path="res://assets/fonts/font_Simple.ttf" id="8_6lf41"]
 [ext_resource type="AudioStream" uid="uid://cvsusq3qjp6b3" path="res://assets/sfx/sfx_sea_thunderstorm.wav" id="8_pcucu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ivdte"]
@@ -120,15 +121,142 @@ tracks/3/keys = {
 "values": [0.0, 0.0, -80.0]
 }
 
+[sub_resource type="Animation" id="Animation_fsbj3"]
+resource_name = "outro"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LanternGlow:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.6, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.898039, 0.870588, 0.501961, 0), Color(0.898039, 0.870588, 0.501961, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TransitionFade:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5, 6.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-256, 0), Vector2(-256, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TransitionFade/Label:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 7.50596),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Lightning:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ThundercloudSprite:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(90, -0.25, 0, 0.5, 0, 93, -0.5, 0, 0.5, 0, 90, -0.5, 0, 0.5, 0, 92.7586, -0.5, 0, 0.5, 0, 89.6552, -0.5, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.96667, 4.03701, 6.01658, 8)
+}
+
+[sub_resource type="Animation" id="Animation_6gabi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LanternGlow:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.898039, 0.870588, 0.501961, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TransitionFade:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-256, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TransitionFade/Label:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Lightning:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ThundercloudSprite:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jv3mq"]
 _data = {
-"intro": SubResource("Animation_l6770")
+"RESET": SubResource("Animation_6gabi"),
+"intro": SubResource("Animation_l6770"),
+"outro": SubResource("Animation_fsbj3")
 }
 
 [node name="IslandCutscene" type="Node2D" node_paths=PackedStringArray("animator")]
 script = ExtResource("1_qdfys")
 animator = NodePath("AnimationPlayer")
-gameplay_scene = ExtResource("2_qrmyg")
+scene_resource = ExtResource("2_o6qxo")
 
 [node name="SkyColorRect" type="ColorRect" parent="."]
 offset_right = 175.0
@@ -136,18 +264,18 @@ offset_bottom = 175.0
 color = Color(0.168627, 0.211765, 0.356863, 1)
 
 [node name="ThundercloudSprite" type="Sprite2D" parent="."]
-position = Vector2(88, 91.4091)
+position = Vector2(87, 0)
 texture = ExtResource("4_oaawp")
 
 [node name="IslandSprite" type="Sprite2D" parent="."]
-position = Vector2(88, 88)
+position = Vector2(87, 88)
 texture = ExtResource("3_vribs")
 
 [node name="LanternGlow" type="ColorRect" parent="."]
 offset_left = 68.0
-offset_top = 114.0
+offset_top = 115.0
 offset_right = 69.0
-offset_bottom = 115.0
+offset_bottom = 116.0
 color = Color(0.898039, 0.870588, 0.501961, 1)
 
 [node name="Lightning" type="Node2D" parent="." node_paths=PackedStringArray("strike_sprite", "strike_timer", "strike_area_shape")]
@@ -176,8 +304,8 @@ autostart = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = -256.0
-offset_right = -216.0
-offset_bottom = 40.0
+offset_right = -81.0
+offset_bottom = 175.0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="TransitionFade"]
 layout_mode = 0
@@ -196,11 +324,31 @@ layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("6_8f12j")
 
+[node name="Label" type="Label" parent="TransitionFade"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.5
+offset_top = -87.5
+offset_right = 87.5
+offset_bottom = 87.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("8_6lf41")
+theme_override_font_sizes/font_size = 8
+text = "The End"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_jv3mq")
 }
-autoplay = "intro"
 
 [node name="SeaAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_pcucu")
