@@ -7,6 +7,9 @@ class_name GameManager
 
 signal game_completed()
 
+var _in_cutscene: bool = false
+var _gameplay_timer_secs: float = 0
+
 
 func switch_to_ending_scene():
 	var scene_tree: SceneTree = get_tree()
@@ -15,6 +18,11 @@ func switch_to_ending_scene():
 
 func _ready():
 	firefly_resource.connect("all_fireflies_deposited", _on_all_fireflies_deposited)
+
+
+func _process(delta: float) -> void:
+	if not GlobalData.is_game_ended:
+		_gameplay_timer_secs += delta
 
 
 func _input(_event):
@@ -30,5 +38,6 @@ func _input(_event):
 
 func _on_all_fireflies_deposited():
 	GlobalData.is_game_ended = true
+	GlobalData.gameplay_timer_secs = _gameplay_timer_secs
 	game_completed.emit()
 	animator.play('ending')

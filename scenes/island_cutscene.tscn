@@ -120,10 +120,22 @@ tracks/3/keys = {
 "update": 0,
 "values": [0.0, 0.0, -80.0]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TransitionFade/OutroText:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_fsbj3"]
 resource_name = "outro"
-length = 8.0
+length = 15.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -143,7 +155,7 @@ tracks/1/path = NodePath("TransitionFade:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 5, 6.1),
+"times": PackedFloat32Array(0, 6.5, 7.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(-256, 0), Vector2(-256, 0), Vector2(0, 0)]
@@ -151,11 +163,11 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TransitionFade/Label:visible")
+tracks/2/path = NodePath("TransitionFade/OutroText/TheEndLabel:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 7.50596),
+"times": PackedFloat32Array(0, 8.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -182,6 +194,42 @@ tracks/4/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
 "points": PackedFloat32Array(90, -0.25, 0, 0.5, 0, 93, -0.5, 0, 0.5, 0, 90, -0.5, 0, 0.5, 0, 92.7586, -0.5, 0, 0.5, 0, 89.6552, -0.5, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 1.96667, 4.03701, 6.01658, 8)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TransitionFade/OutroText/StatsContainer:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TransitionFade/OutroText:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SeaAudioPlayer:volume_db")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(6.8, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
 }
 
 [sub_resource type="Animation" id="Animation_6gabi"]
@@ -213,7 +261,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TransitionFade/Label:visible")
+tracks/2/path = NodePath("TransitionFade/OutroText/TheEndLabel:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -245,6 +293,42 @@ tracks/4/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TransitionFade/OutroText/StatsContainer:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TransitionFade/OutroText:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SeaAudioPlayer:volume_db")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jv3mq"]
 _data = {
@@ -253,10 +337,11 @@ _data = {
 "outro": SubResource("Animation_fsbj3")
 }
 
-[node name="IslandCutscene" type="Node2D" node_paths=PackedStringArray("animator")]
+[node name="IslandCutscene" type="Node2D" node_paths=PackedStringArray("animator", "stat_values_label")]
 script = ExtResource("1_qdfys")
 animator = NodePath("AnimationPlayer")
 scene_resource = ExtResource("2_o6qxo")
+stat_values_label = NodePath("TransitionFade/OutroText/StatsContainer/ValuesLabel")
 
 [node name="SkyColorRect" type="ColorRect" parent="."]
 offset_right = 175.0
@@ -324,26 +409,58 @@ layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("6_8f12j")
 
-[node name="Label" type="Label" parent="TransitionFade"]
+[node name="OutroText" type="Control" parent="TransitionFade"]
 visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TheEndLabel" type="Label" parent="TransitionFade/OutroText"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("8_6lf41")
+theme_override_font_sizes/font_size = 8
+text = "...- The End -..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatsContainer" type="HBoxContainer" parent="TransitionFade/OutroText"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -87.5
-offset_top = -87.5
-offset_right = 87.5
-offset_bottom = 87.5
+offset_left = -25.5
+offset_top = 33.5
+offset_right = 26.5
+offset_bottom = 52.5
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 1
+
+[node name="NamesLabel" type="Label" parent="TransitionFade/OutroText/StatsContainer"]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("8_6lf41")
 theme_override_font_sizes/font_size = 8
-text = "The End"
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "Time: 
+Deaths:"
+horizontal_alignment = 2
+
+[node name="ValuesLabel" type="Label" parent="TransitionFade/OutroText/StatsContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_6lf41")
+theme_override_font_sizes/font_size = 8
+text = "00:00
+0"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

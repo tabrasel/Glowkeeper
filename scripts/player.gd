@@ -143,9 +143,10 @@ func _handle_input(delta):
 
 
 func _on_safe_area_body_exited(body: Node2D):
-	if body.name == "Player":
+	if body.name == "Player" and not GlobalData.is_game_ended:
 		is_alive = false
 		_is_controllable = false
+		GlobalData.death_count += 1
 		death_timer.start()
 
 

@@ -1,3 +1,2 @@
 - Intro cutscene
-- Outro cutscene
 - Background music
