@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://27c45s4m5sou"]
+[gd_scene load_steps=35 format=3 uid="uid://27c45s4m5sou"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_3yjid"]
 [ext_resource type="PackedScene" uid="uid://bubmgpj2we3km" path="res://scenes/player.tscn" id="1_apqri"]
@@ -104,20 +104,6 @@ size = Vector2(2975, 1050)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2n0rj"]
 resource_local_to_scene = true
 size = Vector2(3201, 47)
-
-[sub_resource type="GDScript" id="GDScript_hhsp1"]
-script/source = "extends Label
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
 
 [sub_resource type="Animation" id="Animation_lvv70"]
 resource_name = "enter_cutscene_mode"
@@ -888,24 +874,6 @@ offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
-
-[node name="FireflyCountLabel" type="Label" parent="Camera/HUD"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -43.0
-offset_top = 3.0
-offset_right = -3.0
-offset_bottom = 14.0
-grow_horizontal = 0
-theme_override_fonts/font = ExtResource("11_1xurv")
-theme_override_font_sizes/font_size = 8
-text = "0/20"
-horizontal_alignment = 2
-script = SubResource("GDScript_hhsp1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/HUD"]
 libraries = {

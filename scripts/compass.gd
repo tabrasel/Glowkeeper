@@ -53,7 +53,6 @@ func _process(delta):
 	queue_redraw()
 
 func _draw():
-	var center: Vector2i = Vector2.ZERO
 	var north: Vector2i = Vector2i(int(cos(_angle) * 7), int(sin(_angle) * 7))
 	var south: Vector2 = Vector2i(int(-north.x), int(-north.y))
 

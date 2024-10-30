@@ -33,8 +33,6 @@ var _target_anchor = Vector2()
 var _target_offset = Vector2()
 var _target_position = Vector2()
 
-var _particles_material: ParticleProcessMaterial
-
 const CATCH_DISTANCE = 15
 
 

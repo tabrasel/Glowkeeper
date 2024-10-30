@@ -10,8 +10,8 @@ signal fireflies_deposited()
 signal all_fireflies_deposited()
 
 
-func set_uncaught_fireflies(uncaught_fireflies: Array):
-	self.uncaught_fireflies = uncaught_fireflies
+func set_uncaught_fireflies(fireflies: Array):
+	self.uncaught_fireflies = fireflies
 
 func get_next_firefly() -> Node:
 	if uncaught_fireflies.size() == 0:

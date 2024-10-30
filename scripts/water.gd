@@ -26,8 +26,8 @@ class WaterSurfacePoint:
 	var position: Vector2
 	var velocity: Vector2
 
-	func _init(position: Vector2):
-		self.position = position
+	func _init(pos: Vector2):
+		self.position = pos
 
 
 func _ready() -> void:
@@ -88,11 +88,8 @@ func _on_ripple_timer_timeout() -> void:
 	"""
 	Make several ripples offscreen
 	"""
-	var camera_viewport_width: float = camera.get_viewport_rect().size.x
-	#var offset_min: float = (camera_viewport_width / 2) + 25
-	#var offset_max: float = (camera_viewport_width / 2) + 25
-	var offset_min: float = (175 / 2) + 25
-	var offset_max: float = (350 / 2) + 25
+	var offset_min: float = (175.0 / 2) + 25
+	var offset_max: float = (350.0 / 2) + 25
 	
 	for i in range(3):
 		var offset: float = randf_range(offset_min, offset_max)
