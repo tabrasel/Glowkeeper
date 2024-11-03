@@ -762,6 +762,7 @@ position = Vector2(-513, 500)
 position = Vector2(887, 325)
 
 [node name="Rooms" type="Node2D" parent="TileMap"]
+visible = false
 
 [node name="RoomArea" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 title = "The Lantern"
@@ -1118,7 +1119,7 @@ script = ExtResource("3_sdril")
 map_bounds_area_shape = NodePath("../MapBoundsArea/SafeAreaCollisionShape2D")
 room_collision_area = NodePath("RoomCollisionArea")
 
-[node name="HUD" type="Control" parent="Camera" node_paths=PackedStringArray("animation_player", "transition_display", "letterbox", "room_title_label")]
+[node name="HUD" type="Control" parent="Camera" node_paths=PackedStringArray("animation_player", "transition_display", "letterbox", "room_title_label", "room_title_background_label")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -88.0
@@ -1129,10 +1130,31 @@ script = ExtResource("7_ewnvq")
 animation_player = NodePath("AnimationPlayer")
 transition_display = NodePath("TransitionOverlay")
 letterbox = NodePath("Letterbox")
-room_title_label = NodePath("RoomTitleLabel")
+room_title_label = NodePath("RoomTitle/RoomTitleLabel")
+room_title_background_label = NodePath("RoomTitle/RoomTitleBackgroundLabel")
 firefly_resource = ExtResource("10_e5tni")
 
-[node name="RoomTitleLabel" type="Label" parent="Camera/HUD"]
+[node name="RoomTitle" type="Control" parent="Camera/HUD"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="RoomTitleBackgroundLabel" type="Label" parent="Camera/HUD/RoomTitle"]
+modulate = Color(0, 0, 0, 1)
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 3.0
+offset_bottom = 11.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("11_1xurv")
+theme_override_font_sizes/font_size = 8
+text = "Room Name"
+horizontal_alignment = 1
+
+[node name="RoomTitleLabel" type="Label" parent="Camera/HUD/RoomTitle"]
 z_as_relative = false
 layout_mode = 1
 anchors_preset = 10

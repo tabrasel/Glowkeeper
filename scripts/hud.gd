@@ -5,6 +5,7 @@ extends Control
 @export var transition_display: ColorRect
 @export var letterbox: Control
 @export var room_title_label: Label
+@export var room_title_background_label: Label
 @export var firefly_resource: FireflyResource
 
 
@@ -18,6 +19,7 @@ func _ready():
 
 func _on_room_entered(room_area: RoomArea):
 	room_title_label.text = room_area.title
+	room_title_background_label.text = room_area.title
 
 
 func _on_player_player_died():
