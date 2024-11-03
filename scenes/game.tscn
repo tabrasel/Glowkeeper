@@ -801,7 +801,7 @@ title = "Crossroads"
 
 [node name="RoomArea10" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-1050, 350)
-title = "Remember This"
+title = "The Devil's Tuning Fork"
 
 [node name="RoomArea11" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-1050, 175)
@@ -849,7 +849,7 @@ title = "Outer Wall"
 
 [node name="RoomArea22" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(525, 525)
-title = "Glen's Grotto"
+title = "Gloomy Grotto"
 
 [node name="RoomArea23" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(0, 525)
@@ -869,7 +869,7 @@ title = "Don't Be Hasty"
 
 [node name="RoomArea28" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-175, 350)
-title = "Jungle Gym"
+title = "Mine Entrance"
 
 [node name="RoomArea29" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(0, 350)
@@ -957,7 +957,7 @@ title = "Minor Concussion"
 
 [node name="RoomArea50" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-1050, 525)
-title = "Hop, Skip, and a Jump"
+title = "Cargo Hold"
 
 [node name="RoomArea51" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-875, 525)
@@ -997,7 +997,7 @@ title = "Highbeams"
 
 [node name="RoomArea60" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(350, 0)
-title = "On Top of it All"
+title = "Suspension"
 
 [node name="RoomArea61" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(1225, 525)
@@ -1013,7 +1013,7 @@ title = "Flytrap"
 
 [node name="RoomArea64" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-175, 175)
-title = "Front Steps"
+title = "The Grand Staircase"
 
 [node name="RoomArea65" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(350, -175)
