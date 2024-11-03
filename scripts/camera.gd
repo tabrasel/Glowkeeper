@@ -47,7 +47,12 @@ func _process(_delta):
 
 		if _is_shaking:
 			position.x += randi_range(-1, 1)
-			position.y += randi_range(-1, 1)
-	
+			position.y += randi_range(-1, 1)	
+
+
 func start_shaking():
 	_is_shaking = true
+	
+
+func stop_shaking():
+	_is_shaking = false

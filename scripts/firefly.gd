@@ -21,7 +21,9 @@ enum FireflyState {ROAMING, CAUGHT, DEPOSITED, FLYING_INTO_LANTERN, IN_LANTERN}
 @export var acceleration_range: float
 @export var max_speed: float
 
-var state: FireflyState = FireflyState.ROAMING
+@onready var game_manager: GameManager = %GameManager
+
+var state: FireflyState = FireflyState.IN_LANTERN
 
 var _player: Node2D
 var _lantern: Lantern
@@ -34,6 +36,10 @@ var _target_offset = Vector2()
 var _target_position = Vector2()
 
 const CATCH_DISTANCE = 15
+
+
+func set_state(new_state: FireflyState) -> void:
+	state = new_state
 
 
 func _ready():
@@ -55,11 +61,13 @@ func _ready():
 	_update_target()
 	
 func _process(_delta: float):
+	if state == FireflyState.IN_LANTERN:
+		particles.emitting = false
 	if state == FireflyState.ROAMING:
 		animated_sprite.play('roam')
 		glow_sprite.visible = false
 		particles.process_material = cry_particle_material
-	elif state == FireflyState.CAUGHT:
+	elif state == FireflyState.CAUGHT or state == FireflyState.IN_LANTERN:
 		animated_sprite.play('caught')
 		glow_sprite.visible = true
 		particles.process_material = sparkle_particle_material
@@ -70,7 +78,9 @@ func _process(_delta: float):
 
 func _physics_process(delta: float):
 	if state == FireflyState.ROAMING:
-		if global_position.distance_to(_player.global_position) <= CATCH_DISTANCE:
+		z_index = 0
+		_target_anchor = _initial_anchor
+		if global_position.distance_to(_player.global_position) <= CATCH_DISTANCE and not game_manager._in_cutscene:
 			_catch()
 	elif state == FireflyState.CAUGHT:
 		_target_anchor = _player.global_position
@@ -79,7 +89,8 @@ func _physics_process(delta: float):
 			state = FireflyState.IN_LANTERN
 	elif state == FireflyState.IN_LANTERN:
 		z_index = -10
-		var lantern_top_position = _lantern.top_marker.global_position;
+		var lantern_top_position: Vector2 = _lantern.top_marker.global_position;
+		_target_anchor = lantern_top_position
 		global_position.x = clamp(global_position.x, lantern_top_position.x - 5, lantern_top_position.x + 5)
 		global_position.y = clamp(global_position.y, lantern_top_position.y - 2, lantern_top_position.y + 2)
 	
@@ -138,8 +149,7 @@ func _on_target_reposition_timer_timeout():
 func uncatch():
 	global_position.x = _initial_anchor.x
 	global_position.y = _initial_anchor.y
-	_target_anchor.x = _initial_anchor.x
-	_target_anchor.y = _initial_anchor.y
+ 
 	velocity = Vector2.ZERO
 	state = FireflyState.ROAMING
 

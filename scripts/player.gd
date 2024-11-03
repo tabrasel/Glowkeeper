@@ -1,9 +1,12 @@
 extends CharacterBody2D
 class_name Player
 
+enum PlayerState {SLEEPING, AWAKE}
+
 @export var animated_sprite: AnimatedSprite2D
 @export var collider: CollisionShape2D
 @export var death_timer: Timer
+@export var game_manager: GameManager
 
 @export_group('Audio Players')
 @export var footstep_audio_player: AudioStreamPlayer
@@ -15,6 +18,7 @@ class_name Player
 
 signal player_died
 
+var _state: PlayerState = PlayerState.SLEEPING
 var _input_direction: int
 var _direction_x: int = 1
 var _cayote_time_remaining: float
@@ -59,9 +63,13 @@ func jump():
 	_jump_buffer_time_remaining = 0
 	_cayote_time_remaining = 0
 	jump_audio_player.play(0.1)
-
+	
+func set_state(new_state: PlayerState) -> void:
+	_state = new_state
+	print('set state to: ' + str(_state))
+	
 func _process(_delta):
-	if _is_controllable:
+	if _is_controllable and not game_manager._in_cutscene:
 		_input_direction = int(Input.get_axis("ui_left", "ui_right"))
 	else:
 		_input_direction = 0
@@ -70,18 +78,20 @@ func _process(_delta):
 		_direction_x = _input_direction
 
 	# Set animation
-	animated_sprite.flip_h = _direction_x < 0
-	if is_on_floor():
-		if !_was_on_floor:
-			land_audio_player.play()
-		if abs(velocity.x) < 1 and !_input_direction:
-			animated_sprite.play("idle")
+	
+	if _state == PlayerState.AWAKE:
+		animated_sprite.flip_h = _direction_x < 0
+		if is_on_floor():
+			if !_was_on_floor:
+				land_audio_player.play()
+			if abs(velocity.x) < 1 and !_input_direction:
+				animated_sprite.play("idle")
+			else:
+				animated_sprite.play("run")
+				if (!footstep_audio_player.playing):
+					footstep_audio_player.play()
 		else:
-			animated_sprite.play("run")
-			if (!footstep_audio_player.playing):
-				footstep_audio_player.play()
-	else:
-		animated_sprite.play("jump")
+			animated_sprite.play("jump")
 		
 	if is_on_ceiling() and !_was_on_ceiling:
 			head_hit_audio_player.play()

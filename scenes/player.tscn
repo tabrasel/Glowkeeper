@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bubmgpj2we3km"]
+[gd_scene load_steps=11 format=3 uid="uid://bubmgpj2we3km"]
 
 [ext_resource type="Texture2D" uid="uid://c8st0ponerlsm" path="res://assets/spritesheets/spritesheet_player.png" id="1_lh372"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_nbj2v"]
@@ -20,6 +20,10 @@ region = Rect2(32, 16, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_n6anv"]
 atlas = ExtResource("1_lh372")
 region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ho5nu"]
+atlas = ExtResource("1_lh372")
+region = Rect2(32, 48, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l6xt5"]
 animations = [{
@@ -49,6 +53,14 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ho5nu")
+}],
+"loop": true,
+"name": &"sleep",
+"speed": 0.0
 }]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "death_timer", "footstep_audio_player", "jump_audio_player", "land_audio_player", "head_hit_audio_player")]
@@ -63,7 +75,8 @@ head_hit_audio_player = NodePath("AudioPlayers/HeadHitAudioPlayer")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_l6xt5")
-animation = &"idle"
+animation = &"sleep"
+frame_progress = 0.0341064
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(0, 7.2)

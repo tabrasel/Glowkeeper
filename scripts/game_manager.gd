@@ -11,6 +11,10 @@ var _in_cutscene: bool = false
 var _gameplay_timer_secs: float = 0
 
 
+func set_in_cutscene(in_cutscene: bool) -> void:
+	_in_cutscene = in_cutscene
+
+
 func switch_to_ending_scene():
 	var scene_tree: SceneTree = get_tree()
 	scene_tree.change_scene_to_file(scene_resource.cutscene_scene_path)

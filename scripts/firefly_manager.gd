@@ -4,6 +4,11 @@ extends Node2D
 @export var firefly_resource: FireflyResource
 
 
+func release_fireflies() -> void:
+	for firefly: Firefly in firefly_resource.uncaught_fireflies:
+		firefly.set_state(Firefly.FireflyState.ROAMING)
+
+
 func arrange_fireflies_around_lantern() -> void:
 	var deposited_firefly_count: int = len(firefly_resource.deposited_fireflies)
 	for i in range(deposited_firefly_count):

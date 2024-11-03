@@ -9,8 +9,6 @@ extends Control
 
 
 func _ready():
-	letterbox.visible = false
-	
 	var room_nodes = get_tree().get_nodes_in_group("Rooms")
 	for node in room_nodes:
 		if node is RoomArea:
