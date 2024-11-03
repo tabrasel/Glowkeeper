@@ -1026,6 +1026,16 @@ sprite_frames = SubResource("SpriteFrames_70nof")
 autoplay = "default"
 frame_progress = 0.328684
 
+[node name="BrokenCeilingParticles" type="GPUParticles2D" parent="TileMap"]
+position = Vector2(13, -134)
+emitting = false
+amount = 6
+process_material = SubResource("ParticleProcessMaterial_3d7ly")
+texture = ExtResource("14_rh6ao")
+lifetime = 2.5
+one_shot = true
+explosiveness = 1.0
+
 [node name="MapBoundsArea" type="Area2D" parent="."]
 visible = false
 
