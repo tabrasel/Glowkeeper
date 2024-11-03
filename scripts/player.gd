@@ -27,7 +27,7 @@ var _was_on_floor: bool
 var _was_on_ceiling: bool
 
 var is_alive: bool = true
-var _is_controllable: bool = true
+var _is_controllable: bool
 var _spawn_position: Vector2
 var _spawn_direction: int
 
@@ -49,7 +49,6 @@ func _ready():
 
 func spawn():
 	is_alive = true
-	_is_controllable = true
 	global_position = _spawn_position
 	_direction_x = _spawn_direction
 	velocity = Vector2.ZERO
@@ -66,7 +65,6 @@ func jump():
 	
 func set_state(new_state: PlayerState) -> void:
 	_state = new_state
-	print('set state to: ' + str(_state))
 	
 func _process(_delta):
 	if _is_controllable and not game_manager._in_cutscene:
@@ -76,9 +74,10 @@ func _process(_delta):
 		
 	if _input_direction:
 		_direction_x = _input_direction
+		
+	_is_controllable = not game_manager._in_cutscene
 
 	# Set animation
-	
 	if _state == PlayerState.AWAKE:
 		animated_sprite.flip_h = _direction_x < 0
 		if is_on_floor():
