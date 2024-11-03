@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://beil3xx675iw2"]
+[gd_scene load_steps=15 format=3 uid="uid://beil3xx675iw2"]
 
 [ext_resource type="Script" path="res://scripts/checkpoint.gd" id="1_fdtvq"]
 [ext_resource type="Texture2D" uid="uid://b33ruf3pbtwg7" path="res://assets/spritesheets/checkpoint_glow.png" id="1_p275d"]
 [ext_resource type="Texture2D" uid="uid://hjeswta1ljfo" path="res://assets/spritesheets/checkpoint_lamp.png" id="2_2uo8o"]
 [ext_resource type="Texture2D" uid="uid://glk3b6l3lb5g" path="res://assets/spritesheets/sprite_glow.png" id="2_ixuoo"]
+[ext_resource type="AudioStream" uid="uid://d3ou66x24jaxf" path="res://assets/sfx/sfx_checkpoint.wav" id="5_d8122"]
 
 [sub_resource type="Gradient" id="Gradient_pjc2p"]
 colors = PackedColorArray(1, 1, 1, 0.368627, 1, 1, 1, 0)
@@ -85,7 +86,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0c2h"]
 size = Vector2(16, 2)
 
-[node name="Checkpoint" type="Node2D" node_paths=PackedStringArray("lamp_glow", "lamp_glow_rect", "ground_glow", "ground_glow_sprite", "activation_particles", "spawn_point", "ground_glow_animation_player", "lamp_glow_animation_player") groups=["Checkpoints"]]
+[node name="Checkpoint" type="Node2D" node_paths=PackedStringArray("lamp_glow", "lamp_glow_rect", "ground_glow", "ground_glow_sprite", "activation_particles", "spawn_point", "ground_glow_animation_player", "lamp_glow_animation_player", "audio_player") groups=["Checkpoints"]]
 script = ExtResource("1_fdtvq")
 lamp_glow = NodePath("LampGlow")
 lamp_glow_rect = NodePath("LampGlow/Rect")
@@ -95,6 +96,7 @@ activation_particles = NodePath("ActivationParticles")
 spawn_point = NodePath("SpawnPoint")
 ground_glow_animation_player = NodePath("GroundGlow/AnimationPlayer")
 lamp_glow_animation_player = NodePath("LampGlow/AnimationPlayer")
+audio_player = NodePath("AudioPlayer")
 
 [node name="ActivationParticles" type="GPUParticles2D" parent="."]
 position = Vector2(0, -9)
@@ -153,5 +155,9 @@ position = Vector2(0, -7)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationArea"]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_u0c2h")
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_d8122")
+volume_db = -5.0
 
 [connection signal="body_entered" from="ActivationArea" to="." method="_on_activation_area_body_entered"]

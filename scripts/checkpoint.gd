@@ -9,6 +9,7 @@ extends Node2D
 @export var spawn_point: Node2D
 @export var ground_glow_animation_player: AnimationPlayer
 @export var lamp_glow_animation_player: AnimationPlayer
+@export var audio_player: AudioStreamPlayer
 
 signal activated(checkpoint)
 
@@ -27,6 +28,8 @@ func activate():
 	ground_glow_animation_player.pause()
 	var ground_glow_tween: Tween = create_tween()
 	ground_glow_tween.tween_property(ground_glow, 'modulate', Color(1, 1, 1, 0), 0.1)
+	
+	audio_player.play()
 	
 
 func deactivate():
