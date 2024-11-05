@@ -168,7 +168,7 @@ tracks/7/keys = {
 
 [sub_resource type="Animation" id="Animation_l6770"]
 resource_name = "intro"
-length = 10.0
+length = 9.5
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -176,7 +176,7 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(10),
+"times": PackedFloat32Array(9.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -213,7 +213,7 @@ tracks/3/path = NodePath("SeaAudioPlayer:volume_db")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 8, 9.8),
+"times": PackedFloat32Array(0, 7.8, 9.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.0, -80.0]
