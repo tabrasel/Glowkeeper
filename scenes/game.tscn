@@ -793,7 +793,7 @@ script = ExtResource("9_8johk")
 position = Vector2(12, 251)
 
 [node name="Checkpoint1" parent="TileMap/Checkpoints" instance=ExtResource("9_81l8p")]
-position = Vector2(-513, 500)
+position = Vector2(-838, 500)
 
 [node name="Checkpoint2" parent="TileMap/Checkpoints" instance=ExtResource("9_81l8p")]
 position = Vector2(887, 325)
