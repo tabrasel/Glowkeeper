@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://ce77ibv62vkq" path="res://scenes/water.tscn" id="13_6lylm"]
 [ext_resource type="Texture2D" uid="uid://c7qhlovbab2rd" path="res://assets/spritesheets/spritesheet_lightning_big.png" id="13_f7eq3"]
 [ext_resource type="Texture2D" uid="uid://oyxaia7i17qq" path="res://assets/particles/particle_rail.png" id="14_rh6ao"]
-[ext_resource type="AudioStream" uid="uid://bhecwcy1wnxku" path="res://assets/sfx/sfx_rain.wav" id="15_3d82r"]
+[ext_resource type="AudioStream" uid="uid://bqx0ag2c1g72x" path="res://assets/sfx/sfx_rain.wav" id="15_3d82r"]
 [ext_resource type="AudioStream" uid="uid://ddkc0g8g4xwej" path="res://assets/sfx/sfx_rumble.mp3" id="16_3khft"]
 [ext_resource type="Texture2D" uid="uid://c8ff26qn4sppm" path="res://assets/cutscene/fade_dither.png" id="19_0382k"]
 [ext_resource type="AudioStream" uid="uid://cjiyn8j8wor48" path="res://assets/sfx/sfx_lightning_strike.wav" id="23_5ybw8"]
