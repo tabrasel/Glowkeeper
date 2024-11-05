@@ -838,7 +838,7 @@ title = "Crossroads"
 
 [node name="RoomArea10" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-1050, 350)
-title = "The Devil's Tuning Fork"
+title = "The Impossible Trident"
 
 [node name="RoomArea11" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-1050, 175)
