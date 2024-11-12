@@ -862,7 +862,7 @@ title = "Cold Feet"
 
 [node name="RoomArea16" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-350, 525)
-title = "Self Control"
+title = "Icarus"
 
 [node name="RoomArea17" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(175, 525)
@@ -902,7 +902,7 @@ title = "Over the Edge"
 
 [node name="RoomArea27" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-175, 525)
-title = "Don't Be Hasty"
+title = "Tip-toe"
 
 [node name="RoomArea28" parent="TileMap/Rooms" instance=ExtResource("12_su3ph")]
 position = Vector2(-175, 350)
