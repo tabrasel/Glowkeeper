@@ -24,6 +24,8 @@ GlobalData="*res://scripts/global_data.gd"
 
 window/size/viewport_width=175
 window/size/viewport_height=175
+window/size/window_width_override=525
+window/size/window_height_override=525
 window/stretch/mode="viewport"
 
 [input]
